@@ -174,9 +174,10 @@ Due to limited hackathon time, data generation and initial model training **must
     - Matched count / % (progress bar)
     - Unmatched count (with drill-down)
     - Execution time
-  - Dashboard 2: Compliance Exceptions
+  - Dashboard 2: Compliance Exceptions & Human-in-the-Loop (HITL) Queue
     - Flagged transactions (table with reason, amount, counterparty)
     - Approvals needed (queue with approver names)
+    - HITL Queue: Transactions where Rules and ML scores diverged (showing the calculated ML variance).
     - Risk summary (OFAC hits, high-risk counterparties)
   - Dashboard 3: Audit Trail
     - Transaction lookup (search by ID or counterparty)
@@ -211,9 +212,10 @@ Due to limited hackathon time, data generation and initial model training **must
      - Compliance: "22 transactions flagged (OFAC, limits, workflows)"
      - Exposures: "Top counterparty = 18% of portfolio"
   
-  5. [Time: 240-300 sec] Drill into one flagged transaction
-     - Show audit trail: Agent 1 flagged as anomaly → Agent 2 flagged OFAC → Agent 4 unmatched → Agent 5 escalation recommended
-     - Explain: "Complete traceability for regulators"
+  5. [Time: 240-300 sec] Drill into one flagged transaction & Show HITL
+     - Show Human-in-the-Loop feature: "Rule said approve, but ML detected 90% chance of escalating. Pushing to HITL review."
+     - Show audit trail: Agent 1 flagged anomaly → Agent 2 flagged rule/ML variance → Agent 5 HITL recommended
+     - Explain: "Complete traceability for regulators by catching edge cases"
   
   6. [Time: 300-330 sec] Export compliance report (PDF)
      - Show PDF with all flagged items, reasoning, recommendations
@@ -347,6 +349,8 @@ Due to limited hackathon time, data generation and initial model training **must
    # Business logic: If approval_prob > 0.7, mark as "likely approve"
    #                 If approval_prob < 0.3, mark as "likely escalate"
    #                 If 0.3-0.7, "uncertain" (manual review)
+   # HITL Logic:     Compare deterministic rule status vs ML approval_prob
+   #                 If Rule Status == "APPROVE" but approval_prob < 0.3 -> Route to Human-in-the-Loop review
    ```
 
 **Success Criteria:**

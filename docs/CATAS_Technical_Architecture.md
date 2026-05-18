@@ -104,7 +104,11 @@ FOR each normalized transaction:
   5. ML: Pattern learning from compliance officer decisions
      → Learn: What percentage of escalations in this category are approved?
      → Score new transactions as "likely-approve" vs "likely-reject"
-  6. Output: Compliance decision (APPROVE, ESCALATE, FLAG)
+  6. HUMAN-IN-THE-LOOP (HITL) ARBITRATION:
+     → Calculate divergence between ML Approval Prob and Rule Severity
+     → If Rule says "APPROVE" but ML Anomaly/Rejection Confidence > 80%: Route to HITL Queue
+     → If Rule says "FLAG" but ML Approval Confidence > 95%: Route to HITL Queue with "Auto-Clear Suggestion"
+  7. Output: Compliance decision (APPROVE, ESCALATE, FLAG, HITL_REVIEW)
 ```
 
 **ML Engineering:**
