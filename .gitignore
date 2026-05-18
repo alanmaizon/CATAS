@@ -24,9 +24,16 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Note: We are deliberately NOT ignoring data/ and models/ 
-# since we want to share the synthetic data and pre-trained 
-# offline models with teammates for the hackathon. 
+# Note: We are deliberately NOT ignoring data/ and models/
+# since we want to share the synthetic data and pre-trained
+# offline models with teammates for the hackathon.
 # If dataset sizes grow significantly, uncomment the below.
 # data/
 # models/
+
+# Runtime artifacts from CATAS skills (audit log + MLRO alert outbox).
+# Regenerated on every agent run; do not commit.
+logs/
+
+# Built skill ZIPs (regenerated from skills/*/ by skills/package.sh).
+skills/_dist/

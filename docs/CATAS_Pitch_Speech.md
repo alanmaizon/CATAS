@@ -37,10 +37,15 @@ But if you deploy them as stand-alone silos, a human still has to sit in the mid
 "CATAS acts as the unified, multi-agent layer utilizing Lyzr's powerful architecture. 
 
 When a transaction is initiated, our system doesn't just scan it post-transaction. It triggers a real-time, adversarial analysis using Lyzr's 'private-by-design' architecture. 
-- Agent 1 handles the Treasury context.
-- Agent 2 instantly queries the **Lyzr Regulatory Monitoring Agent** to ingest real-time policy updates.
-- Underpinning it all is Lyzr's tri-agent governance protocol (ACE-V), which ensures that every action is secure and explainable.
-- Our Human-In-The-Loop capability ensures that if a manual review is required, the reviewer is presented with a perfectly synthesized, transparent audit trail generated via the **Knowledge Assistant RAG**.
+
+- Before any data hits the core LLM, **AWS Bedrock Guardrails** instantly redact PII like IBANs and client names natively, guaranteeing zero data leakage.
+- Agent 1 handles the Treasury context, executing our custom **`parse-ledger-data`** skill to securely ingest and reconcile the bank feeds without exploding the context window.
+- Agent 2 then takes that parsed data and queries our **Regulatory Monitoring Agent** — a Lyzr Knowledge Assistant built on the EU's Consolidated Financial Sanctions feed and the Central Bank of Ireland's published AML guidance — so every rule the agent enforces traces back to the actual regulator's source.
+- Underpinning it all is Lyzr's ACE-V protocol (Authenticate, Corroborate, Evaluate, Validate), which ensures that every action is secure and explainable.
+
+When an anomaly is flagged, the agent dynamically executes our **`trigger-mlro-alert`** skill to instantaneously route a structured case to the compliance officer in Slack or PagerDuty. Simultaneously, it fires the **`write-audit-log`** skill, saving a perfectly synthesized, immutable audit record locally before the human even opens the ticket.
+
+But what makes this truly autonomous is our use of **Amazon Bedrock AgentCore Memory**. Because our memory is deployed locally in AWS Ireland via cross-account role assumption, the platform securely remembers past MLRO variances across sessions. It eliminates repetitive false-positives without ever breaking data residency rules.
 
 Every decision, whether approved or blocked, carries a verifiable cryptographic attestation. We are replacing a 3-week post-mortem audit process with real-time, explainable, structural accountability."
 

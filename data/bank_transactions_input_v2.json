@@ -1198,5 +1198,41 @@
     "transaction_type": "wire_payment",
     "reference": "INV-9486",
     "source_system": "bank_feed"
+  },
+  {
+    "transaction_id": "TXN-2026-SEED-001",
+    "bank_date": "2026-05-19",
+    "timestamp": "2026-05-19T11:45:00Z",
+    "amount": 245000.0,
+    "currency": "EUR",
+    "counterparty_name": "BoreasTrade Holdings LLP",
+    "counterparty_id": "CP-9471",
+    "transaction_type": "wire_payment",
+    "reference": "INV-9471-PROCUREMENT",
+    "source_system": "bank_feed"
+  },
+  {
+    "transaction_id": "TXN-2026-SEED-002",
+    "bank_date": "2026-05-19",
+    "timestamp": "2026-05-19T13:20:00Z",
+    "amount": 48000.0,
+    "currency": "USD",
+    "counterparty_name": "Volkov Maritime Services AG",
+    "counterparty_id": "CP-9488",
+    "transaction_type": "wire_payment",
+    "reference": "INV-9488-LOGISTICS",
+    "source_system": "bank_feed"
+  },
+  {
+    "transaction_id": "TXN-2026-SEED-003",
+    "bank_date": "2026-05-19",
+    "timestamp": "2026-05-19T14:05:00Z",
+    "amount": 8750000.0,
+    "currency": "USD",
+    "counterparty_name": "Wayne Enterprises",
+    "counterparty_id": "CP-1007",
+    "transaction_type": "wire_payment",
+    "reference": "INV-WAYNE-CAPEX-2026Q2",
+    "source_system": "bank_feed"
   }
 ]
