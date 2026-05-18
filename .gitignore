@@ -1,0 +1,32 @@
+# Environments
+venv/
+.venv/
+env/
+ENV/
+.env
+
+# Python compilation paths
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Note: We are deliberately NOT ignoring data/ and models/ 
+# since we want to share the synthetic data and pre-trained 
+# offline models with teammates for the hackathon. 
+# If dataset sizes grow significantly, uncomment the below.
+# data/
+# models/

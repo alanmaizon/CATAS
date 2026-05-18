@@ -1,0 +1,767 @@
+[
+  {
+    "gl_id": "GL-2026-0001",
+    "gl_date": "2026-05-19",
+    "amount": 4390054.53,
+    "currency": "EUR",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-12",
+    "reference": "INV-2175"
+  },
+  {
+    "gl_id": "GL-2026-0004",
+    "gl_date": "2026-05-19",
+    "amount": 4586035.16,
+    "currency": "EUR",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-22",
+    "reference": "INV-6542"
+  },
+  {
+    "gl_id": "GL-2026-0006",
+    "gl_date": "2026-05-19",
+    "amount": 32061.79,
+    "currency": "CAD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-80",
+    "reference": "INV-9023"
+  },
+  {
+    "gl_id": "GL-2026-0007",
+    "gl_date": "2026-05-19",
+    "amount": 57571.75,
+    "currency": "USD",
+    "counterparty_name": "Vandelay",
+    "account_code": "4000-85",
+    "reference": "INV-3393"
+  },
+  {
+    "gl_id": "GL-2026-0008",
+    "gl_date": "2026-05-19",
+    "amount": 70767.21,
+    "currency": "EUR",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-45",
+    "reference": "INV-5230"
+  },
+  {
+    "gl_id": "GL-2026-0009",
+    "gl_date": "2026-05-19",
+    "amount": 57340.93,
+    "currency": "EUR",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-36",
+    "reference": "INV-3391"
+  },
+  {
+    "gl_id": "GL-2026-0010",
+    "gl_date": "2026-05-19",
+    "amount": 40566.2,
+    "currency": "EUR",
+    "counterparty_name": "Initech",
+    "account_code": "4000-72",
+    "reference": "INV-3904"
+  },
+  {
+    "gl_id": "GL-2026-0011",
+    "gl_date": "2026-05-19",
+    "amount": 69201.36,
+    "currency": "USD",
+    "counterparty_name": "Cyberdyne",
+    "account_code": "4000-29",
+    "reference": "INV-8854"
+  },
+  {
+    "gl_id": "GL-2026-0012",
+    "gl_date": "2026-05-19",
+    "amount": 68431.81,
+    "currency": "GBP",
+    "counterparty_name": "Initech",
+    "account_code": "4000-46",
+    "reference": "INV-6322"
+  },
+  {
+    "gl_id": "GL-2026-0013",
+    "gl_date": "2026-05-19",
+    "amount": 66681.32,
+    "currency": "JPY",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-26",
+    "reference": "INV-2620"
+  },
+  {
+    "gl_id": "GL-2026-0014",
+    "gl_date": "2026-05-19",
+    "amount": 2673.79,
+    "currency": "JPY",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-72",
+    "reference": "INV-6978"
+  },
+  {
+    "gl_id": "GL-2026-0016",
+    "gl_date": "2026-05-19",
+    "amount": 68171.55,
+    "currency": "JPY",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-24",
+    "reference": "INV-6910"
+  },
+  {
+    "gl_id": "GL-2026-0018",
+    "gl_date": "2026-05-19",
+    "amount": 11122.43,
+    "currency": "JPY",
+    "counterparty_name": "Vandelay",
+    "account_code": "4000-95",
+    "reference": "INV-9276"
+  },
+  {
+    "gl_id": "GL-2026-0019",
+    "gl_date": "2026-05-19",
+    "amount": 50184.73,
+    "currency": "USD",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-78",
+    "reference": "INV-6929"
+  },
+  {
+    "gl_id": "GL-2026-0020",
+    "gl_date": "2026-05-19",
+    "amount": 72434.53,
+    "currency": "USD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-71",
+    "reference": "INV-5299"
+  },
+  {
+    "gl_id": "GL-2026-0021",
+    "gl_date": "2026-05-19",
+    "amount": 8502.01,
+    "currency": "CAD",
+    "counterparty_name": "Massive Dynamic",
+    "account_code": "4000-40",
+    "reference": "INV-3002"
+  },
+  {
+    "gl_id": "GL-2026-0022",
+    "gl_date": "2026-05-19",
+    "amount": 52033.21,
+    "currency": "JPY",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-75",
+    "reference": "INV-4563"
+  },
+  {
+    "gl_id": "GL-2026-0023",
+    "gl_date": "2026-05-19",
+    "amount": 72813.24,
+    "currency": "EUR",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-53",
+    "reference": "INV-1212"
+  },
+  {
+    "gl_id": "GL-2026-0025",
+    "gl_date": "2026-05-19",
+    "amount": 71997.0,
+    "currency": "GBP",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-15",
+    "reference": "INV-6461"
+  },
+  {
+    "gl_id": "GL-2026-0026",
+    "gl_date": "2026-05-19",
+    "amount": 31771.98,
+    "currency": "CAD",
+    "counterparty_name": "Umbrella Corp",
+    "account_code": "4000-80",
+    "reference": "INV-1877"
+  },
+  {
+    "gl_id": "GL-2026-0027",
+    "gl_date": "2026-05-19",
+    "amount": 69686.42,
+    "currency": "EUR",
+    "counterparty_name": "Initech",
+    "account_code": "4000-21",
+    "reference": "INV-5862"
+  },
+  {
+    "gl_id": "GL-2026-0028",
+    "gl_date": "2026-05-19",
+    "amount": 74171.6,
+    "currency": "GBP",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-82",
+    "reference": "INV-4902"
+  },
+  {
+    "gl_id": "GL-2026-0029",
+    "gl_date": "2026-05-19",
+    "amount": 2756.92,
+    "currency": "USD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-83",
+    "reference": "INV-1271"
+  },
+  {
+    "gl_id": "GL-2026-0030",
+    "gl_date": "2026-05-19",
+    "amount": 51031.18,
+    "currency": "GBP",
+    "counterparty_name": "Cyberdyne",
+    "account_code": "4000-16",
+    "reference": "INV-9105"
+  },
+  {
+    "gl_id": "GL-2026-0031",
+    "gl_date": "2026-05-19",
+    "amount": 13732.37,
+    "currency": "JPY",
+    "counterparty_name": "Stark Industries",
+    "account_code": "4000-78",
+    "reference": "INV-6770"
+  },
+  {
+    "gl_id": "GL-2026-0032",
+    "gl_date": "2026-05-19",
+    "amount": 57278.74,
+    "currency": "CAD",
+    "counterparty_name": "Vandelay",
+    "account_code": "4000-59",
+    "reference": "INV-5076"
+  },
+  {
+    "gl_id": "GL-2026-0035",
+    "gl_date": "2026-05-19",
+    "amount": 74342.69,
+    "currency": "CAD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-51",
+    "reference": "INV-6695"
+  },
+  {
+    "gl_id": "GL-2026-0036",
+    "gl_date": "2026-05-19",
+    "amount": 61195.68,
+    "currency": "USD",
+    "counterparty_name": "Initech",
+    "account_code": "4000-92",
+    "reference": "INV-1679"
+  },
+  {
+    "gl_id": "GL-2026-0037",
+    "gl_date": "2026-05-19",
+    "amount": 25659.33,
+    "currency": "JPY",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-30",
+    "reference": "INV-6006"
+  },
+  {
+    "gl_id": "GL-2026-0038",
+    "gl_date": "2026-05-19",
+    "amount": 66650.89,
+    "currency": "CAD",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-58",
+    "reference": "INV-1488"
+  },
+  {
+    "gl_id": "GL-2026-0039",
+    "gl_date": "2026-05-19",
+    "amount": 612.51,
+    "currency": "GBP",
+    "counterparty_name": "Cyberdyne",
+    "account_code": "4000-64",
+    "reference": "INV-9418"
+  },
+  {
+    "gl_id": "GL-2026-0040",
+    "gl_date": "2026-05-19",
+    "amount": 68425.89,
+    "currency": "CAD",
+    "counterparty_name": "Umbrella Corp",
+    "account_code": "4000-50",
+    "reference": "INV-3582"
+  },
+  {
+    "gl_id": "GL-2026-0042",
+    "gl_date": "2026-05-19",
+    "amount": 40758.37,
+    "currency": "USD",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-75",
+    "reference": "INV-9925"
+  },
+  {
+    "gl_id": "GL-2026-0043",
+    "gl_date": "2026-05-19",
+    "amount": 17713.99,
+    "currency": "EUR",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-20",
+    "reference": "INV-1299"
+  },
+  {
+    "gl_id": "GL-2026-0044",
+    "gl_date": "2026-05-19",
+    "amount": 7259.6,
+    "currency": "JPY",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-90",
+    "reference": "INV-2839"
+  },
+  {
+    "gl_id": "GL-2026-0045",
+    "gl_date": "2026-05-19",
+    "amount": 43427.23,
+    "currency": "EUR",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-56",
+    "reference": "INV-8097"
+  },
+  {
+    "gl_id": "GL-2026-0046",
+    "gl_date": "2026-05-19",
+    "amount": 60241.9,
+    "currency": "GBP",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-69",
+    "reference": "INV-8543"
+  },
+  {
+    "gl_id": "GL-2026-0047",
+    "gl_date": "2026-05-19",
+    "amount": 55308.16,
+    "currency": "CAD",
+    "counterparty_name": "Massive Dynamic",
+    "account_code": "4000-17",
+    "reference": "INV-1148"
+  },
+  {
+    "gl_id": "GL-2026-0048",
+    "gl_date": "2026-05-19",
+    "amount": 74069.79,
+    "currency": "JPY",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-61",
+    "reference": "INV-2575"
+  },
+  {
+    "gl_id": "GL-2026-0049",
+    "gl_date": "2026-05-19",
+    "amount": 2502.6,
+    "currency": "USD",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-74",
+    "reference": "INV-1077"
+  },
+  {
+    "gl_id": "GL-2026-0051",
+    "gl_date": "2026-05-19",
+    "amount": 22511.62,
+    "currency": "CAD",
+    "counterparty_name": "Massive Dynamic",
+    "account_code": "4000-54",
+    "reference": "INV-1927"
+  },
+  {
+    "gl_id": "GL-2026-0052",
+    "gl_date": "2026-05-19",
+    "amount": 7207.5,
+    "currency": "GBP",
+    "counterparty_name": "Initech",
+    "account_code": "4000-29",
+    "reference": "INV-2457"
+  },
+  {
+    "gl_id": "GL-2026-0053",
+    "gl_date": "2026-05-19",
+    "amount": 56564.72,
+    "currency": "JPY",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-76",
+    "reference": "INV-2834"
+  },
+  {
+    "gl_id": "GL-2026-0054",
+    "gl_date": "2026-05-19",
+    "amount": 37290.78,
+    "currency": "GBP",
+    "counterparty_name": "Initech",
+    "account_code": "4000-88",
+    "reference": "INV-9506"
+  },
+  {
+    "gl_id": "GL-2026-0055",
+    "gl_date": "2026-05-19",
+    "amount": 69342.15,
+    "currency": "JPY",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-76",
+    "reference": "INV-5264"
+  },
+  {
+    "gl_id": "GL-2026-0056",
+    "gl_date": "2026-05-19",
+    "amount": 28477.34,
+    "currency": "USD",
+    "counterparty_name": "Initech",
+    "account_code": "4000-80",
+    "reference": "INV-9809"
+  },
+  {
+    "gl_id": "GL-2026-0057",
+    "gl_date": "2026-05-19",
+    "amount": 47248.53,
+    "currency": "GBP",
+    "counterparty_name": "Initech",
+    "account_code": "4000-29",
+    "reference": "INV-6792"
+  },
+  {
+    "gl_id": "GL-2026-0058",
+    "gl_date": "2026-05-19",
+    "amount": 21263.73,
+    "currency": "JPY",
+    "counterparty_name": "Stark Industries",
+    "account_code": "4000-64",
+    "reference": "INV-4346"
+  },
+  {
+    "gl_id": "GL-2026-0059",
+    "gl_date": "2026-05-19",
+    "amount": 46171.73,
+    "currency": "EUR",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-39",
+    "reference": "INV-2386"
+  },
+  {
+    "gl_id": "GL-2026-0060",
+    "gl_date": "2026-05-19",
+    "amount": 65260.07,
+    "currency": "EUR",
+    "counterparty_name": "Vandelay",
+    "account_code": "4000-65",
+    "reference": "INV-3666"
+  },
+  {
+    "gl_id": "GL-2026-0062",
+    "gl_date": "2026-05-19",
+    "amount": 68870.68,
+    "currency": "JPY",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-52",
+    "reference": "INV-6186"
+  },
+  {
+    "gl_id": "GL-2026-0063",
+    "gl_date": "2026-05-19",
+    "amount": 43855.85,
+    "currency": "CAD",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-96",
+    "reference": "INV-6350"
+  },
+  {
+    "gl_id": "GL-2026-0065",
+    "gl_date": "2026-05-19",
+    "amount": 41588.28,
+    "currency": "JPY",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-10",
+    "reference": "INV-3566"
+  },
+  {
+    "gl_id": "GL-2026-0066",
+    "gl_date": "2026-05-19",
+    "amount": 38787.14,
+    "currency": "USD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-96",
+    "reference": "INV-1378"
+  },
+  {
+    "gl_id": "GL-2026-0067",
+    "gl_date": "2026-05-19",
+    "amount": 49711.13,
+    "currency": "USD",
+    "counterparty_name": "Stark Industries",
+    "account_code": "4000-83",
+    "reference": "INV-1903"
+  },
+  {
+    "gl_id": "GL-2026-0068",
+    "gl_date": "2026-05-19",
+    "amount": 19002.61,
+    "currency": "EUR",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-93",
+    "reference": "INV-5797"
+  },
+  {
+    "gl_id": "GL-2026-0069",
+    "gl_date": "2026-05-19",
+    "amount": 13224.98,
+    "currency": "CAD",
+    "counterparty_name": "Massive Dynamic",
+    "account_code": "4000-50",
+    "reference": "INV-1387"
+  },
+  {
+    "gl_id": "GL-2026-0070",
+    "gl_date": "2026-05-19",
+    "amount": 27915.37,
+    "currency": "USD",
+    "counterparty_name": "Initech",
+    "account_code": "4000-42",
+    "reference": "INV-4876"
+  },
+  {
+    "gl_id": "GL-2026-0071",
+    "gl_date": "2026-05-19",
+    "amount": 69061.17,
+    "currency": "JPY",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-39",
+    "reference": "INV-4333"
+  },
+  {
+    "gl_id": "GL-2026-0072",
+    "gl_date": "2026-05-19",
+    "amount": 72702.2,
+    "currency": "EUR",
+    "counterparty_name": "Initech",
+    "account_code": "4000-30",
+    "reference": "INV-2367"
+  },
+  {
+    "gl_id": "GL-2026-0073",
+    "gl_date": "2026-05-19",
+    "amount": 51390.03,
+    "currency": "CAD",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-23",
+    "reference": "INV-9118"
+  },
+  {
+    "gl_id": "GL-2026-0074",
+    "gl_date": "2026-05-19",
+    "amount": 30652.74,
+    "currency": "JPY",
+    "counterparty_name": "Acme Corp",
+    "account_code": "4000-28",
+    "reference": "INV-4740"
+  },
+  {
+    "gl_id": "GL-2026-0075",
+    "gl_date": "2026-05-19",
+    "amount": 1487.67,
+    "currency": "EUR",
+    "counterparty_name": "Globex",
+    "account_code": "4000-38",
+    "reference": "INV-4983"
+  },
+  {
+    "gl_id": "GL-2026-0076",
+    "gl_date": "2026-05-19",
+    "amount": 29482.44,
+    "currency": "JPY",
+    "counterparty_name": "Stark Industries",
+    "account_code": "4000-70",
+    "reference": "INV-7943"
+  },
+  {
+    "gl_id": "GL-2026-0078",
+    "gl_date": "2026-05-19",
+    "amount": 47783.9,
+    "currency": "USD",
+    "counterparty_name": "Umbrella Corp",
+    "account_code": "4000-68",
+    "reference": "INV-4295"
+  },
+  {
+    "gl_id": "GL-2026-0079",
+    "gl_date": "2026-05-19",
+    "amount": 43738.41,
+    "currency": "EUR",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-78",
+    "reference": "INV-4311"
+  },
+  {
+    "gl_id": "GL-2026-0080",
+    "gl_date": "2026-05-19",
+    "amount": 3651.65,
+    "currency": "JPY",
+    "counterparty_name": "Vandelay",
+    "account_code": "4000-60",
+    "reference": "INV-1069"
+  },
+  {
+    "gl_id": "GL-2026-0081",
+    "gl_date": "2026-05-19",
+    "amount": 46212.7,
+    "currency": "JPY",
+    "counterparty_name": "Cyberdyne",
+    "account_code": "4000-99",
+    "reference": "INV-1987"
+  },
+  {
+    "gl_id": "GL-2026-0082",
+    "gl_date": "2026-05-19",
+    "amount": 57052.69,
+    "currency": "CAD",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-52",
+    "reference": "INV-2671"
+  },
+  {
+    "gl_id": "GL-2026-0083",
+    "gl_date": "2026-05-19",
+    "amount": 25048.69,
+    "currency": "EUR",
+    "counterparty_name": "Cyberdyne",
+    "account_code": "4000-17",
+    "reference": "INV-4347"
+  },
+  {
+    "gl_id": "GL-2026-0084",
+    "gl_date": "2026-05-19",
+    "amount": 62450.5,
+    "currency": "USD",
+    "counterparty_name": "Stark Industries",
+    "account_code": "4000-55",
+    "reference": "INV-8839"
+  },
+  {
+    "gl_id": "GL-2026-0085",
+    "gl_date": "2026-05-19",
+    "amount": 53776.33,
+    "currency": "CAD",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-74",
+    "reference": "INV-1860"
+  },
+  {
+    "gl_id": "GL-2026-0086",
+    "gl_date": "2026-05-19",
+    "amount": 58464.38,
+    "currency": "CAD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-56",
+    "reference": "INV-3318"
+  },
+  {
+    "gl_id": "GL-2026-0087",
+    "gl_date": "2026-05-19",
+    "amount": 20089.8,
+    "currency": "USD",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-16",
+    "reference": "INV-9364"
+  },
+  {
+    "gl_id": "GL-2026-0088",
+    "gl_date": "2026-05-19",
+    "amount": 25323.32,
+    "currency": "EUR",
+    "counterparty_name": "Goliath National Bank",
+    "account_code": "4000-31",
+    "reference": "INV-4393"
+  },
+  {
+    "gl_id": "GL-2026-0089",
+    "gl_date": "2026-05-19",
+    "amount": 50274.9,
+    "currency": "CAD",
+    "counterparty_name": "Umbrella Corp",
+    "account_code": "4000-21",
+    "reference": "INV-8278"
+  },
+  {
+    "gl_id": "GL-2026-0090",
+    "gl_date": "2026-05-19",
+    "amount": 61742.3,
+    "currency": "JPY",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-31",
+    "reference": "INV-2879"
+  },
+  {
+    "gl_id": "GL-2026-0091",
+    "gl_date": "2026-05-19",
+    "amount": 31741.85,
+    "currency": "USD",
+    "counterparty_name": "Globex",
+    "account_code": "4000-11",
+    "reference": "INV-2523"
+  },
+  {
+    "gl_id": "GL-2026-0092",
+    "gl_date": "2026-05-19",
+    "amount": 4148.87,
+    "currency": "EUR",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-80",
+    "reference": "INV-2741"
+  },
+  {
+    "gl_id": "GL-2026-0094",
+    "gl_date": "2026-05-19",
+    "amount": 50612.26,
+    "currency": "USD",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-87",
+    "reference": "INV-1284"
+  },
+  {
+    "gl_id": "GL-2026-0095",
+    "gl_date": "2026-05-19",
+    "amount": 16901.4,
+    "currency": "GBP",
+    "counterparty_name": "Soylent",
+    "account_code": "4000-50",
+    "reference": "INV-4960"
+  },
+  {
+    "gl_id": "GL-2026-0096",
+    "gl_date": "2026-05-19",
+    "amount": 59397.69,
+    "currency": "GBP",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-19",
+    "reference": "INV-3371"
+  },
+  {
+    "gl_id": "GL-2026-0097",
+    "gl_date": "2026-05-19",
+    "amount": 71794.76,
+    "currency": "GBP",
+    "counterparty_name": "Cyberdyne",
+    "account_code": "4000-77",
+    "reference": "INV-4319"
+  },
+  {
+    "gl_id": "GL-2026-0098",
+    "gl_date": "2026-05-19",
+    "amount": 28166.71,
+    "currency": "USD",
+    "counterparty_name": "Wayne Enterprises",
+    "account_code": "4000-58",
+    "reference": "INV-4216"
+  },
+  {
+    "gl_id": "GL-2026-0099",
+    "gl_date": "2026-05-19",
+    "amount": 18997.83,
+    "currency": "EUR",
+    "counterparty_name": "Initech",
+    "account_code": "4000-94",
+    "reference": "INV-5349"
+  }
+]
