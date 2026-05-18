@@ -8,13 +8,15 @@
 ### [Intro - The Hook] (0:00 - 0:45)
 
 **Speaker:** 
-"Fraud is not just a problem of bad actors. It’s a problem of broken substrates. 
+"We are here at Baseline this weekend to bridge the gap between autocomplete and autonomous workflows. But in the financial sector, there is an even bigger gap: the gap between Treasury and Compliance.
+
+Fraud is not just a problem of bad actors. It’s a problem of broken substrates. 
 
 Today, Treasury and Compliance teams sit one floor apart but operate in entirely different realities. When a suspect transaction hits, teams spend up to 20 hours a month manually cross-referencing spreadsheets and general ledgers just to reconcile the data, let alone confidently stop the fraud. 
 
 This isn't a problem we can solve by just adding another detection tool. It’s an architectural failure. The gaps between our disconnected systems are exactly where fraudsters hide. 
 
-That is why we built **CATAS**—the Compliance And Treasurer Agentic Solutions."
+That is why we used the Lyzr Architect framework to build **CATAS**—a cross-application autonomous workforce for Compliance and Treasury."
 
 ### [The Ecosystem Flex - Demonstrating Lyzr Knowledge] (0:45 - 1:45)
 
@@ -34,9 +36,10 @@ But if you deploy them as stand-alone silos, a human still has to sit in the mid
 **Speaker:**
 "CATAS acts as the unified, multi-agent layer utilizing Lyzr's powerful architecture. 
 
-When a transaction is initiated, our system doesn't just scan it post-transaction. It triggers a real-time, adversarial analysis. 
+When a transaction is initiated, our system doesn't just scan it post-transaction. It triggers a real-time, adversarial analysis using Lyzr's 'private-by-design' architecture. 
 - Agent 1 handles the Treasury context.
 - Agent 2 instantly queries the **Lyzr Regulatory Monitoring Agent** to ingest real-time policy updates.
+- Underpinning it all is Lyzr's tri-agent governance protocol (ACE-V), which ensures that every action is secure and explainable.
 - Our Human-In-The-Loop capability ensures that if a manual review is required, the reviewer is presented with a perfectly synthesized, transparent audit trail generated via the **Knowledge Assistant RAG**.
 
 Every decision, whether approved or blocked, carries a verifiable cryptographic attestation. We are replacing a 3-week post-mortem audit process with real-time, explainable, structural accountability."
