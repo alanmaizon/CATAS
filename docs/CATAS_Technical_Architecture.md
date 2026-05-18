@@ -79,23 +79,24 @@ FOR each transaction:
 
 ---
 
-### **Agent 2: Compliance Rules Engine**
+### **Agent 2: Compliance Rules Engine (Lyzr Compliance Checker & Knowledge Assistant)**
 
-**Responsibility:** Apply regulatory and internal compliance rules, generate compliance signals.
+**Responsibility:** Validate transactions against internal policies and dynamic regulatory rules using Lyzr's Knowledge Assistant RAG capabilities.
 
 **Inputs:**
 - Normalized transactions from Agent 1
-- Compliance rule database (XML/JSON config)
-- Regulatory reference data (OFAC list, sanctions, blocked jurisdictions)
+- Internal Treasury Policy Documents (PDFs parsed via Lyzr Knowledge Bank)
+- Continuous Regulatory Monitoring Feeds (OFAC, FDIC scraped data)
 - Approval workflow definitions
 
 **Processing Logic:**
 ```
 FOR each normalized transaction:
-  1. SANCTIONS CHECK: Does counterparty appear in OFAC/EU/UN lists?
-     → If YES: Flag severity HIGH, escalate immediately
-  2. TRANSACTION LIMITS: Apply per-counterparty, per-product limits
-     → If exceeds limit: Create escalation ticket
+  1. KNOWLEDGE ASSISTANT RAG CHECK: Query Lyzr Knowledge Bank for dynamic rule families
+     → Evaluate transaction context against embedded FDIC/OFAC policies.
+  2. COMPLIANCE CHECKER VALIDATION:
+     → Does counterparty appear in sanctions list? (Flag severity HIGH)
+     → Apply per-counterparty, per-product limits
   3. APPROVAL WORKFLOW: Does transaction exceed approval authority?
      → If YES: Check if approval already obtained from approver
      → If NO: Route to approver
@@ -106,8 +107,8 @@ FOR each normalized transaction:
      → Score new transactions as "likely-approve" vs "likely-reject"
   6. HUMAN-IN-THE-LOOP (HITL) ARBITRATION:
      → Calculate divergence between ML Approval Prob and Rule Severity
-     → If Rule says "APPROVE" but ML Anomaly/Rejection Confidence > 80%: Route to HITL Queue
-     → If Rule says "FLAG" but ML Approval Confidence > 95%: Route to HITL Queue with "Auto-Clear Suggestion"
+     → If Checker says "APPROVE" but ML Anomaly/Rejection Confidence > 80%: Route to HITL Queue
+     → If Checker says "FLAG" but ML Approval Confidence > 95%: Route to HITL Queue with "Auto-Clear Suggestion"
   7. Output: Compliance decision (APPROVE, ESCALATE, FLAG, HITL_REVIEW)
 ```
 
