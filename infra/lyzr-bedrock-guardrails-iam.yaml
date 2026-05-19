@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudFormation template to create an IAM role with AWS Bedrock Guardrails access.
+  The role can be assumed by the Lyzr ECS task role for cross-account guardrail integration.
+
+Parameters:
+  AccountAId:
+    Description: Account ID of the trusted AWS account Lyzr
+    Type: String
+    Default: "481665119516"
+    MinLength: 12
+    MaxLength: 12
+    AllowedPattern: ^[0-9]{12}$
+    ConstraintDescription: Must be a 12-digit AWS account number.
+
+  BedrockRoleName:
+    Description: The name of the IAM role in Lyzr Account that will assume this role.
+    Type: String
+    Default: "lyzr-Lyzr-Studio-prod-ecs-task-role"
+    MinLength: 1
+    MaxLength: 64
+    AllowedPattern: ^[a-zA-Z0-9+=,.@_-]{1,64}$
+    ConstraintDescription: Role name must be between 1 and 64 characters long.
+
+Resources:
+  BedrockGuardrailsAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "CROSSACCOUNT-${AWS::StackName}"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub "arn:${AWS::Partition}:iam::${AccountAId}:role/${BedrockRoleName}"
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: BedrockGuardrailsAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "bedrock:GetGuardrail"
+                  - "bedrock:ListGuardrails"
+                  - "bedrock:ApplyGuardrail"
+                  - "bedrock:CreateGuardrail"
+                  - "bedrock:UpdateGuardrail"
+                  - "bedrock:DeleteGuardrail"
+                  - "bedrock:CreateGuardrailVersion"
+                  - "bedrock:ListGuardrailVersions"
+                  - "bedrock:GetGuardrailVersion"
+                Resource: "*"
+
+Outputs:
+  RoleArn:
+    Description: The ARN of the IAM role created for Bedrock Guardrails access.
+    Value: !GetAtt BedrockGuardrailsAccessRole.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-RoleArn"

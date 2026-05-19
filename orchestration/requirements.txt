@@ -1,0 +1,4 @@
+# Required for LIVE mode (calling the Lyzr Agent API).
+# MOCK mode runs on Python stdlib alone — these deps are optional for local demos.
+requests>=2.31
+python-dotenv>=1.0

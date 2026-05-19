@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  CloudFormation template to create an IAM role in Account B with full Bedrock access.
+  The role can be assumed by the ECS role in Account A with ARN: arn:aws:iam::182399701833:role/lyzr-Lyzr-Studio-staging-ecs-cluster-role.
+
+Parameters:
+  AccountAId:
+    Description: Account ID of the trusted AWS account Lyzr
+    Type: String
+    Default: "182399701833"
+    MinLength: 12
+    MaxLength: 12
+    AllowedPattern: ^[0-9]{12}$
+    ConstraintDescription: Must be a 12-digit AWS account number.
+
+  BedrockRoleName:
+    Description: The name of the IAM role in Lyzr Account that will assume this role.
+    Type: String
+    Default: "lyzr-Lyzr-Studio-dev-ecs-cluster-role"
+    MinLength: 1
+    MaxLength: 64
+    AllowedPattern: ^[a-zA-Z0-9+=,.@_-]{1,64}$
+    ConstraintDescription: Role name must be between 1 and 64 characters long.
+
+Resources:
+  BedrockAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "CROSSACCOUNT-${AWS::StackName}"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub "arn:${AWS::Partition}:iam::${AccountAId}:role/${BedrockRoleName}"
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: FullBedrockAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "bedrock:*"
+                  - "bedrock-runtime:*"
+                  - "bedrock-agentcore:*"
+                  - "bedrock-agentcore-control:*"
+                  - "agentcore:*"
+                Resource: "*"
+
+Outputs:
+  RoleArn:
+    Description: The ARN of the IAM role created in Account B.
+    Value: !GetAtt BedrockAccessRole.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-RoleArn"
