@@ -79,11 +79,24 @@ Once the Architect UI finishes its initial build, paste these follow-up prompts 
 ---
 
 ## 4. Final Knowledge Base Upload
-Because Architect Beta only accepts `PDF`, `DOCX`, and `TXT` files for its Knowledge Base module, you must convert the `.jsonl` audit trail into a `.txt` file before uploading.
+
+The dashboard's internal agents need to read the backend's output. The "Knowledge Base" widget inside the Architect Beta app builder connects directly to the core Lyzr Agent Studio Knowledge Base APIs. 
+
+You have two options for loading the data:
+
+### Option A: Upload as a Text File
+Because the basic file uploader only accepts `PDF`, `DOCX`, and `TXT` files, you must convert the `.jsonl` audit trail into a `.txt` file before uploading.
 
 Run this in the terminal:
 ```bash
 python3 -c "import json; [print(json.dumps(json.loads(line), indent=2)) for line in open('logs/audit_trail.jsonl')]" > logs/audit_trail.txt
 ```
+Then click **Upload Files** underneath both the Treasury and Compliance Insights Agents within the Architect UI and upload `logs/audit_trail.txt`.
 
-Finally, click **Upload Files** underneath both the Treasury Insights Agent and Compliance Insights Agent within the Architect UI and upload `logs/audit_trail.txt`. Click **Preview** to view the finished dashboard.
+### Option B: Paste as Raw Text
+Alternatively, you can skip the file conversion entirely:
+1. Open `logs/audit_trail.jsonl` in your code editor and copy all the text.
+2. In the Architect Beta UI, select **Add Text** under the Knowledge Base configuration.
+3. Paste the raw JSONL contents directly into the prompt box.
+
+Once the Knowledge Base is populated using either method, click **Preview** to view the finished, fully interactive dashboard!
