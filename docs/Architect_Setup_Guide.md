@@ -71,11 +71,10 @@ COMPLIANCE_AGENT_ID="copied-compliance-uuid"
 Once the Architect UI finishes its initial build, paste these follow-up prompts one by one into the Architect chat panel to refine the application:
 
 **Prompt 1 (Responsiveness):**
-> "Please update the CSS and responsiveness of the Dashboard.
-> Make sure the TransactionLedger table is fully scrollable horizontally on smaller screens, and that the text doesn't overflow or clip. Ensure the KpiStrip cards stack neatly (2x2 or 1x4) on mobile devices using Tailwind grid or flexbox rules. Give the AuditPanel a smooth slide-in animation from the right side, and ensure the audit_chain_hash text breaks properly so it doesn't break the layout. Double-check that the HeaderBar and floating ChatDrawer are fixed and don't overlap awkwardly on smaller browser windows."
+> "Please update the CSS and responsiveness of the Dashboard. Make sure the TransactionLedger table is fully scrollable horizontally on smaller screens, and that the text doesn't overflow or clip. Ensure the KpiStrip cards stack neatly (2x2 or 1x4) on mobile devices using Tailwind grid or flexbox rules. Give the AuditPanel a smooth slide-in animation from the right side, and ensure the audit_chain_hash text breaks properly so it doesn't break the layout. Double-check that the HeaderBar and floating ChatDrawer are fixed and don't overlap awkwardly on smaller browser windows."
 
 **Prompt 2 (Chat Formatting):**
-> "Format chat to have text responses not json"
+> "Update the ChatDrawer UI to ensure that the Treasury and Compliance Insights Agents render their responses as flowing conversational text instead of structured JSON objects. Parse the underlying JSON returned by the agents so that any summaries or details are displayed naturally in standard chat bubbles. The underlying data payload should still be preserved for the PDF export feature, but the user-facing chat should read like a normal, human-readable conversation."
 
 ---
 
