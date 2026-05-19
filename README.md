@@ -60,6 +60,11 @@ CATAS runs seamlessly using a custom Python script that strings together the Off
    LYZR_COMPLIANCE_AGENT_ID="compliance-id"
    ```
 
+   - `LYZR_API_KEY` — from Lyzr Studio → Settings → API Keys.
+   - `LYZR_TREASURY_AGENT_ID` / `LYZR_COMPLIANCE_AGENT_ID` — the IDs of the two agents you create in Lyzr Studio. Each ID appears in the agent's URL (`studio.lyzr.ai/agent/<ID>`).
+
+   The exact agent configuration (name, model, role, goal, instructions) is documented step-by-step in [docs/CATAS_Architect_Setup_Guide.md §2](docs/CATAS_Architect_Setup_Guide.md). Without these three variables set, `run_catas.py` automatically falls back to mock mode. See [orchestration/.env.example](orchestration/.env.example) for the full list of supported variables (webhook alerts, AWS SES, path overrides).
+
 2. **Run the Orchestrator:**
    To run the script in deterministic Mock mode (no Lyzr Credits required):
    ```bash

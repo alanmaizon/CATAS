@@ -59,11 +59,20 @@ The dashboard backend connects to the Lyzr Agent Studio API. You must manually c
 *(Leave Manager Agent toggle OFF. Save and copy the Agent ID.)*
 
 **Backend `.env` file configuration:**
+
+These three variables tell `orchestration/run_catas.py` how to reach your Lyzr Studio agents. The keys are read in [orchestration/run_catas.py:52-53](orchestration/run_catas.py#L52-L53); the names must match exactly (with the `LYZR_` prefix) or the live pipeline will fall back to mock mode.
+
 ```env
+# Lyzr Studio → Settings → API Keys
 LYZR_API_KEY="your-lyzr-api-key"
-TREASURY_AGENT_ID="copied-treasury-uuid"
-COMPLIANCE_AGENT_ID="copied-compliance-uuid"
+
+# The Agent IDs you copied from the two agents above.
+# Find them again in Lyzr Studio at studio.lyzr.ai/agent/<ID>.
+LYZR_TREASURY_AGENT_ID="copied-treasury-uuid"
+LYZR_COMPLIANCE_AGENT_ID="copied-compliance-uuid"
 ```
+
+Save this file as `.env` at the **repository root** (not inside `docs/` or `orchestration/`). It is git-ignored. A template with every supported variable lives at [orchestration/.env.example](orchestration/.env.example).
 
 ---
 
