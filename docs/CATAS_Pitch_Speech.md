@@ -52,7 +52,7 @@ Every decision, whether approved or blocked, carries a verifiable cryptographic 
 ### [The Results & Close] (2:45 - 3:30)
 
 **Speaker:**
-"In the last 48 hours, we proved this works. We ran 100 localized, simulated transactions through CATAS. 
+"In the last hours, we proved this works. We ran 100 localized, simulated transactions through CATAS. 
 - We reduced a standard 20-hour manual reconciliation process down to 5 minutes. 
 - We achieved a 97% auto-match rate, with 100% audit-trail coverage on every flagged anomaly.
 
