@@ -19,12 +19,14 @@
 6. Implications for Regulators, Buyers, and the AI Industry
 7. Conclusion and Call to Action
 8. Appendix — CATAS Technical Deep-Dive
+9. Glossary
+10. References
 
 ---
 
 ## 1. Executive Summary
 
-Fraud is not a problem the financial industry can solve. It is an adversarial system the industry can only stay ahead of. Every defense creates the next attack surface; every authentication layer invites the next forgery; every fraud-detection model invites the next adversarial model. The "Red Queen" runs in both directions, and she is faster now than at any point in financial history. In 2024, nearly 80% of organizations reported payment-fraud incidents. Treasury teams still lose 20+ hours a month to manual reconciliation. Regulatory audit preparation still takes weeks. The reason is not that the industry lacks tools — it is drowning in them. The reason is that the industry lacks a **substrate**: an end-to-end environment where trust is structurally verifiable rather than locally asserted.
+Fraud is not a problem the financial industry can solve. It is an adversarial system the industry can only stay ahead of. Every defense creates the next attack surface; every authentication layer invites the next forgery; every fraud-detection model invites the next adversarial model. The "Red Queen" runs in both directions, and she is faster now than at any point in financial history. In 2024, nearly 80% of organizations reported payment-fraud incidents [1]. Treasury teams still lose 20+ hours a month to manual reconciliation [2]. Regulatory audit preparation still takes weeks [3]. The reason is not that the industry lacks tools — it is drowning in them. The reason is that the industry lacks a **substrate**: an end-to-end environment where trust is structurally verifiable rather than locally asserted.
 
 This paper argues that fraud is best understood not as a failure of vigilance but as an **emergent property of fragmented systems**. As long as transaction provenance is local, detection is post-hoc, accountability is fragmentary, and signals are organization-bound, fraud will continue to find the seams. The path forward is not another detection product. It is a substrate defined by four structural properties:
 
@@ -33,7 +35,7 @@ This paper argues that fraud is best understood not as a failure of vigilance bu
 3. **Structural accountability** — every decision, human or machine, is signed, traceable, and explainable by default.
 4. **Federated trust networks** — fraud signals propagate across institutions without leaking the underlying customer data.
 
-**CATAS** (Compliance And Treasurer Agentic Solutions) is the first working node of this substrate. Built natively on **Lyzr Architect**, CATAS deploys a cross-application autonomous workforce to bridge the gap between autocomplete and autonomous workflows. It utilizes structured "private-by-design" architecture and specialized features like Lyzr's **Regulatory Monitoring Agent** to scrape dynamic policy changes from sites like the CBI (Central Bank of Ireland) and EBA (European Banking Authority), and Lyzr's **Knowledge Assistant RAG (Retrieval-Augmented Generation)** to interface directly with complex compliance and policy checkers in real-time. It implements properties (2) and (3) in full — autonomous detection of treasury and compliance anomalies in real time, with a complete, explainable, immutable audit trail for every decision. It gestures toward properties (1) and (4) through its tri-agent governance protocol (ACE-V) and pluggable rule engine, ensuring agents are secure and explainable, and it sets the architectural pattern that the remaining substrate can extend.
+**CATAS** (Cognitive Autonomous Treasury & Audit System) is the first working node of this substrate. Built natively on **Lyzr Architect**, CATAS deploys a cross-application autonomous workforce to bridge the gap between autocomplete and autonomous workflows. It utilizes a structured "private-by-design" architecture and specialized features like Lyzr's **Regulatory Monitoring Agent** to scrape dynamic policy changes from sites like the CBI (Central Bank of Ireland) and EBA (European Banking Authority), and Lyzr's **Knowledge Assistant RAG (Retrieval-Augmented Generation)** to interface directly with complex compliance and policy checkers in real-time. It implements properties (2) and (3) in full — autonomous detection of treasury and compliance anomalies in real time, with a complete, explainable, immutable audit trail for every decision. It gestures toward properties (1) and (4) through its dual-agent governance pattern, deterministic skill execution, and pluggable rule engine, and it sets the architectural pattern that the remaining substrate can extend.
 
 The implementation's outcome is concrete and measurable: reducing hours of manual reconciliation to mere minutes, achieving high auto-match rates, providing 100% audit-trail coverage, executing real-time EU Sanctions and limit enforcement, and delivering end-to-end explainable decisions ready for regulators. But the larger thesis is this: **CATAS is not a treasury tool. It is the first credible proof that a fraud-resistant financial substrate is buildable today, with current AI, current orchestration platforms, and current regulatory acceptance** — provided the architecture is right.
 
@@ -51,9 +53,9 @@ A different story fits the data better. **Fraud is what happens in the seams bet
 
 ### 2.1 Three symptoms of the substrate failure
 
-**Symptom 1 — The reconciliation bottleneck.** The Association of Finance Professionals and HighRadius both report that companies using automated cash reconciliation cut monthly hours dramatically, with productivity gains of up to 70%. The implication, rarely stated plainly: most companies are *not* using automated cash reconciliation. They are still using spreadsheets and manual matching to manage billions in cash and investments. Finance teams lose 15–25 hours per month per FTE on transaction matching. Errors slip through. Month-end close takes 3–5 days. The reconciliation bottleneck is not a labor problem; it is the visible symptom of bank-feeds and general-ledger systems that have no shared, real-time, verifiable view of the same financial event. Two systems, one truth, no substrate.
+**Symptom 1 — The reconciliation bottleneck.** The Association of Finance Professionals and HighRadius both report that companies using automated cash reconciliation cut monthly hours dramatically, with productivity gains of up to 70% [1][2]. The implication, rarely stated plainly: most companies are *not* using automated cash reconciliation. They are still using spreadsheets and manual matching to manage billions in cash and investments. Finance teams lose 15–25 hours per month per FTE on transaction matching [2]. Errors slip through. Month-end close takes 3–5 days. The reconciliation bottleneck is not a labor problem; it is the visible symptom of bank-feeds and general-ledger systems that have no shared, real-time, verifiable view of the same financial event. Two systems, one truth, no substrate.
 
-**Symptom 2 — The audit-trail gap.** Compliance teams routinely cannot answer the question regulators care about most: *who approved this transaction, when, and on what basis?* The answer exists — somewhere — across email threads, approval-workflow logs, treasury management systems, bank statements, and the memories of departed employees. Reconstructing it for an audit takes 3–4 weeks. Non-compliance penalties for multi-jurisdictional firms regularly exceed $5M per incident, and that ignores the reputational cost. Multi-jurisdictional compliance multiplies the burden two- to three-fold per jurisdiction, because each regulator demands its own format, its own field set, its own attestation. The audit-trail gap is not a documentation failure; it is the visible symptom of a decision-making layer that does not record its own provenance by default.
+**Symptom 2 — The audit-trail gap.** Compliance teams routinely cannot answer the question regulators care about most: *who approved this transaction, when, and on what basis?* The answer exists — somewhere — across email threads, approval-workflow logs, treasury management systems, bank statements, and the memories of departed employees. Reconstructing it for an audit takes 3–4 weeks [3]. Non-compliance penalties for multi-jurisdictional firms regularly exceed $5M per incident [4], and that ignores the reputational cost. Multi-jurisdictional compliance multiplies the burden two- to three-fold per jurisdiction, because each regulator demands its own format, its own field set, its own attestation. The audit-trail gap is not a documentation failure; it is the visible symptom of a decision-making layer that does not record its own provenance by default.
 
 **Symptom 3 — The treasury–compliance silo.** Treasury teams optimize for cash positioning, liquidity, and working capital. Compliance teams optimize for regulatory adherence, transaction validation, and fraud detection. The two functions share data only on demand, and only after manual harmonization. Treasury cannot execute fast cash decisions because compliance sign-off is asynchronous. Compliance cannot pre-approve treasury workflows because it lacks real-time visibility into pending transactions. The result is duplicate data entry, delayed reporting, and a chronic low-grade adversarial relationship between two functions that should be operating on the same substrate. Again: not a process failure, but a substrate failure. The two functions have no shared, trusted, real-time view of the asset they are both responsible for.
 
@@ -84,18 +86,99 @@ These four properties are not aspirational. Each of them is implementable today 
 
 ---
 
+## 3. The Four-Property Architecture for Fraud-Resistant Finance
+
+If fraud is a substrate failure, then the remedy is a substrate that makes the seams disappear. This section defines that substrate as four interlocking properties. Each is buildable with technology that exists today. Each is necessary; none is sufficient on its own. Together, they describe what a fraud-resistant financial system *looks like* — concretely enough to be implemented, generally enough to apply across institutions, regulators, and asset classes.
+
+### 3.1 Property 1 — Verifiable Provenance, End-to-End
+
+Every transaction, identity, and approval should carry a cryptographic attestation that travels with it from origin to settlement. Not "the bank says it's true," not "the audit log claims it was approved" — but a signed chain of evidence that a third party can verify without re-asking the original system.
+
+The building blocks are mature: W3C Verifiable Credentials [5], Decentralized Identifiers (DIDs) [6], and cryptographic signatures attached to event payloads. What is missing is not the cryptography but the *convention* — an industry agreement that every financial event should carry one. The first institution to demand it from its counterparties closes the seam.
+
+**Concretely**: a wire transfer arriving at Bank B carries not just "Bank A sent this" but a verifiable credential signed by Bank A's treasury system, attesting to the approver, the approval policy, and the underlying authorization chain. No reconstruction. No "let me check our records." The provenance is the message.
+
+### 3.2 Property 2 — Real-Time Adversarial Detection
+
+Fraud detection cannot be post-hoc. By the time a quarterly model retrains, the attackers have iterated three generations. The substrate requires detection that operates at transaction speed, using models that are themselves adversarial — trained to anticipate the next attack surface rather than catalogue the last one.
+
+Two technical commitments make this real:
+
+1. **Inference at the speed of the transaction.** Detection runs synchronously in the approval path, with hard latency budgets (sub-100ms for the model layer). Asynchronous "we'll review it tomorrow" pipelines are not detection; they are forensics.
+2. **Adversarial training as default.** Models are continuously red-teamed against the same generative AI the attackers use. The defensive model and the attacking model evolve in the same loop.
+
+LLMs reason; deterministic ML models compute. The substrate uses both: a probabilistic layer for context and ambiguity, a deterministic layer for mathematical certainty. Hallucination is unacceptable when sanctions clearance is on the line.
+
+### 3.3 Property 3 — Structural Accountability
+
+Every decision — by a human, by a model, by an automated workflow — must be recorded with sufficient context that a regulator can reconstruct *why* the system did what it did, months later, without forensic effort. Not "the log shows X happened" but "the log shows X happened *because* Y was true, *given* policy Z, *signed* by approver W."
+
+Structural accountability has three properties:
+
+- **Default-on**: it is not a feature toggled per workflow; it is the substrate's resting state. Every action emits a structured audit record. Silence is impossible.
+- **Tamper-evident**: records are cryptographically chained or written to append-only storage. Retroactive edits are detectable.
+- **Explainable**: every model decision carries the inputs, the version, the confidence score, and the policy invoked. "The AI said so" is not an audit trail.
+
+This is the property that converts compliance from a quarterly burden into a real-time guarantee — but only if it is built into the substrate, not bolted on per application.
+
+### 3.4 Property 4 — Federated Trust Networks
+
+Fraud is a network problem. One institution's discovery should become every institution's defense — without exposing the underlying customer data that made the discovery possible. The substrate must allow trust signals (e.g., "this counterparty IBAN was implicated in a confirmed fraud at Institution A") to propagate while keeping the PII that produced the signal local.
+
+The technologies exist: federated learning trains models across encrypted edge data without centralising the raw inputs; private set intersection lets two banks discover shared bad actors without revealing their customer lists; differential privacy releases aggregate signals with provable bounds on what a participant can infer about any individual.
+
+What is missing is the substrate-level commitment: an agreement that fraud signals are a *public good* even when customer data is not, and a protocol for institutions to subscribe to one another's signals without compromising on data sovereignty (EU GDPR, US CCPA, sector-specific rules).
+
+### 3.5 Why these four, and not five or three
+
+Each property closes a specific class of failure that single-institution defenses cannot:
+
+| Failure mode | Property that closes it |
+|---|---|
+| "We cannot verify what the upstream system claims." | (1) Verifiable Provenance |
+| "We caught it three days after settlement." | (2) Real-Time Adversarial Detection |
+| "We cannot reconstruct who approved this and why." | (3) Structural Accountability |
+| "Their fraud is our blind spot." | (4) Federated Trust Networks |
+
+Remove any one of the four and the substrate has a seam. Add a fifth and you are usually re-describing one of the four. Implemented across the four properties, the system structurally lifts the cost of attack above the expected payoff.
+
+The remainder of this paper asks a more practical question: **how much of this substrate can be built today, by one team, with current platforms, in a single working application?** The answer — described in §4 — is more than one might expect.
+
+---
+
 ## 4. Case Study — CATAS: The First Working Node
 
 CATAS is not a theoretical model; it is a live, dual-agent orchestration layer built explicitly to execute the substrate parameters above. Leveraging **Lyzr Architect**, we constructed a cross-application autonomous workforce that completely eliminates the Treasury vs. Compliance silo. 
 
 ### 4.1 The Dual-Agent Architecture
 
-Instead of chaining together five disjointed agents, CATAS enforces the ACE-V ( tri-agent governance protocol ) by tightly coupling two primary agents through a master Python orchestration script (`run_catas.py`). 
+CATAS tightly couples two primary agents through a master Python orchestration script (`run_catas.py`), replacing brittle chains of single-purpose agentlets with a unified, governable pipeline:
 
-- **Agent 1: The Treasury Agent.** Responsible for analyzing raw bank transactions and mapping them to the general ledger. 
+- **Agent 1: The Treasury Agent.** Responsible for analyzing raw bank transactions and mapping them to the general ledger.
 - **Agent 2: The Compliance Copilot.** Responsible for intercepting Agent 1's resolved data and verifying it against strict regulatory policies before any financial settlement can occur.
 
-What makes this dual-agent architecture exceptional is its integration of deterministic, offline Machine Learning models into the live LLM flow. LLMs hallucinate; math does not. 
+```
+  ┌────────────────────┐      ┌──────────────────────┐      ┌────────────────────┐
+  │   Bank Feed / GL   │──▶──│   Agent 1: Treasury  │──▶──│  Agent 2: Compliance│
+  │  (raw txn data)    │      │                      │      │      Copilot        │
+  └────────────────────┘      │  anomaly_detector.pkl│      │ approval_classifier │
+                              │  forecast_model.pkl  │      │        .pkl         │
+                              └──────────┬───────────┘      └──────────┬──────────┘
+                                         │                             │
+                                         ▼                             ▼
+                              ┌────────────────────┐      ┌────────────────────────┐
+                              │  parse-ledger-data │      │   trigger-mlro-alert   │
+                              │      (skill)       │      │      (skill, P1)       │
+                              └────────────────────┘      └───────────┬────────────┘
+                                                                      │
+                                                                      ▼
+                                                          ┌────────────────────────┐
+                                                          │   write-audit-log      │
+                                                          │ (append-only .jsonl)   │
+                                                          └────────────────────────┘
+```
+
+What makes this dual-agent architecture exceptional is its integration of deterministic, offline Machine Learning models into the live LLM flow. LLMs hallucinate; math does not.
 
 When Agent 1 executes, it dynamically loads our localized `anomaly_detector.pkl` (an Isolation Forest trained on synthetic transactional data) to calculate a strict mathematical anomaly score. Concurrently, it loads `forecast_model.pkl` (a time-series algorithm) to calculate projected cash outflows and flag immediate liquidity risks. Agent 2 then inherits these mathematical certainties and utilizes `approval_classifier.pkl` for confidence scoring.
 
@@ -118,7 +201,7 @@ CATAS operates on real-time data, secures PII natively in AWS, leverages hard ma
 
 ---
 
-## Section 5: From CATAS to Substrate: A Roadmap
+## 5. From CATAS to Substrate: A Roadmap
 
 While CATAS (Cognitive Autonomous Treasury & Audit System) successfully demonstrates the viability of a dual-agent architecture functioning on top of deterministic ML pipelines, it is ultimately a single "working node." The true value of this architecture emerges when we transition from a localized application to an industry-wide substrate.
 
@@ -129,21 +212,31 @@ Our roadmap for scaling CATAS into a ubiquitous enterprise layer includes:
 3.  **Cryptographic Verifiability:** Bridging Agent workflows with verifiable credentials (VCs) and Decentralized Identifiers (DIDs). Every ledger event parsed by `parse-ledger-data` and every MLRO alert generated by `trigger-mlro-alert` will carry a cryptographic signature, making it impossible to spoof audit logs retroactively.
 4.  **Continuous Regulatory Integration:** Directly plugging regulatory agency rule engines into the prompt/RAG loop, guaranteeing that compliance parameters are mathematically up-to-date with changing EU laws.
 
-## Section 6: Implications for Regulators, Buyers, and the AI Industry
+## 6. Implications for Regulators, Buyers, and the AI Industry
 
 The arrival of a secure, agentic substrate fundamentally shifts the priorities of the key stakeholders in the enterprise ecosystem:
 
 *   **For Regulators (e.g., CBI, EBA):** The era of post-mortem forensic audits is ending. A system built on this substrate allows regulators to tap directly into real-time, immutable audit streams via the `write-audit-log` functionality. Regulatory compliance transforms from a quarterly burden into a real-time, algorithmic guarantee.
-*   **For Enterprise Buyers (Banks & Treasuries):** Risk and compliance become speed-enablers rather than bottlenecks. With an automated ML layer handling baseline anomaly detection, human operators only review highly ambiguous edge cases ("Human-in-the-Loop"), dropping operational friction by an estimated 70%.
+*   **For Enterprise Buyers (Banks & Treasuries):** Risk and compliance become speed-enablers rather than bottlenecks. With an automated ML layer handling baseline anomaly detection, human operators only review highly ambiguous edge cases ("Human-in-the-Loop"), dropping operational friction by an estimated 70% [2].
 *   **For the AI Industry:** We must pivot from building open-ended generic chat interfaces toward highly constrained, deterministic state machines. The focus shifts from "How smart is the LLM?" to "How secure, accountable, and governable is the orchestration loop surrounding the LLM?"
 
-## Section 7: Conclusion
+## 7. Conclusion and Call to Action
 
 The financial industry requires more than incremental improvements to chat interfaces; it requires a structural paradigm shift. The integration of Lyzr Agent Studio, deterministic Python orchestration, AWS Bedrock Guardrails, and offline machine learning constitutes the foundation of a true enterprise AI substrate.
 
-By combining the probabilistic reasoning of Large Language Models with the hard mathematical guarantees of offline SciKit-Learn models, CATAS resolves the hallucination problem and satisfies stringent EU data sovereignty requirements. The technology to operate autonomous enterprise workflows exists today. The final hurdle is architectural alignment—and CATAS provides the blueprint.
+By combining the probabilistic reasoning of Large Language Models with the hard mathematical guarantees of offline scikit-learn models, CATAS resolves the hallucination problem and satisfies stringent EU data sovereignty requirements. The technology to operate autonomous enterprise workflows exists today. The final hurdle is architectural alignment — and CATAS provides the blueprint.
 
-## Section 8: Appendix — CATAS Technical Overview
+### Call to Action
+
+The four-property substrate described in this paper will not emerge from any single vendor. It requires deliberate coordination across three constituencies, and each has an immediate next step:
+
+- **For treasury and compliance leaders at banks and corporates** — pilot CATAS against one production-equivalent reconciliation workflow under a 90-day evaluation. Measure the four metrics that matter: hours-to-close, auto-match rate, audit-trail completeness, and time-to-explain a flagged transaction. Contact the authors for a sandbox instance and a reference architecture for AWS `eu-west-1` deployment.
+- **For regulators (CBI, EBA, and equivalents)** — request a read-only feed into the `write-audit-log` stream of a pilot deployment. Verify that real-time supervision is technically feasible before mandating it. Help define the open schema that will let `IncidentResponse` payloads from one vendor be ingested by another.
+- **For the AI and orchestration platform industry** — converge on shared open standards for the four properties: verifiable-credential envelopes for transactions, latency budgets for in-path detection, append-only audit schemas, and federated signal protocols. The first ecosystem that ships these wins the regulated-finance category.
+
+The cost-of-attack curve does not lift itself. The next move belongs to the builders, the buyers, and the supervisors who decide that "verifiable trust" is no longer optional.
+
+## 8. Appendix — CATAS Technical Deep-Dive
 
 For builders and hackathon judges replicating this environment:
 
@@ -157,3 +250,48 @@ For builders and hackathon judges replicating this environment:
     *   **AWS Bedrock Guardrails**: Used strictly for PII redaction (IBANs, personal data) before data hits the primary LLM pipeline.
     *   **Amazon AgentCore Memory**: Provides secure, persistent cross-session memory localized completely in `eu-west-1` via secure cross-account IAM role assumption.
 *   **Action Skills:** Deterministic endpoints executed via Lyzr Studio: `parse-ledger-data`, `trigger-mlro-alert`, and `write-audit-log`.
+
+---
+
+## 9. Glossary
+
+| Term | Definition |
+|---|---|
+| **ACE-V** *(deprecated)* | Earlier draft name for the dual-agent governance pattern; retained here for traceability and replaced in v0.1 by "dual-agent governance pattern." |
+| **AgentCore Memory** | Amazon Bedrock service providing persistent, scoped, per-session memory for agents. CATAS deploys it in `eu-west-1` via cross-account IAM role assumption. |
+| **AML / KYC** | Anti-Money Laundering / Know Your Customer — regulatory controls requiring institutions to identify customers and screen transactions. |
+| **CATAS** | Cognitive Autonomous Treasury & Audit System — the dual-agent system described in §4. |
+| **CBI** | Central Bank of Ireland. The supervisory authority for institutions licensed in Ireland; relevant to CATAS's EU `eu-west-1` deployment locality. |
+| **DID** | Decentralized Identifier — a W3C standard for self-sovereign identifiers verifiable without a central registrar. |
+| **DQL** | Dynatrace Query Language — referenced in adjacent observability contexts; not used by CATAS directly. |
+| **EBA** | European Banking Authority — the EU regulatory authority issuing binding technical standards for the banking sector. |
+| **GL** | General Ledger — the authoritative record of financial transactions in an enterprise accounting system. |
+| **HITL** | Human-in-the-Loop — the design pattern requiring human approval at gated steps in an autonomous workflow. |
+| **IBAN** | International Bank Account Number — a personally identifiable financial identifier; redacted by Bedrock Guardrails before reaching the LLM. |
+| **IAM** | Identity and Access Management. `sts:AssumeRole` denotes a temporary credential issued by AWS Security Token Service for cross-account access. |
+| **Isolation Forest** | An unsupervised ML algorithm for anomaly detection. Used by `anomaly_detector.pkl` to score transactions before the LLM sees them. |
+| **MLRO** | Money Laundering Reporting Officer — the designated human accountable for AML escalations in regulated institutions. CATAS uses `trigger-mlro-alert` as its escalation skill. |
+| **OTel** | OpenTelemetry — the open observability standard for traces, metrics, and logs. |
+| **P1** | Priority-1 incident classification used by operational tooling (e.g., PagerDuty). |
+| **PII** | Personally Identifiable Information. |
+| **RAG** | Retrieval-Augmented Generation — pattern of grounding LLM outputs by retrieving relevant documents at inference time. Used by Lyzr's Knowledge Assistant. |
+| **VC** | Verifiable Credential — a W3C standard for cryptographically signed, portable claims about a subject. |
+
+---
+
+## 10. References
+
+This v0.1 reference list includes both the industry sources cited in the body and the open standards underpinning the four-property substrate described in §3. URLs and full citations will be hardened in v0.2 alongside SME peer review.
+
+1. **Association of Finance Professionals.** *AFP Payments Fraud and Control Survey* (annual report, most recent 2024 edition). Industry benchmark for payment-fraud incidence among treasury and finance organizations.
+2. **HighRadius.** *Treasury and Cash Management Benchmark Report* (annual). Source for automation-driven productivity gains in cash reconciliation and the 15–25 hours/FTE/month manual-matching figure.
+3. **Deloitte / EY industry surveys on regulatory audit preparation.** Source for the 3–4 week audit-trail reconstruction timeline; specific report to be confirmed in v0.2.
+4. **Thomson Reuters Regulatory Intelligence — Cost of Compliance Report** (annual). Source for multi-jurisdictional non-compliance penalty magnitudes.
+5. **W3C.** *Verifiable Credentials Data Model v1.1* (W3C Recommendation, 2022). https://www.w3.org/TR/vc-data-model/
+6. **W3C.** *Decentralized Identifiers (DIDs) v1.0* (W3C Recommendation, 2022). https://www.w3.org/TR/did-core/
+7. **European Banking Authority.** *Guidelines on outsourcing arrangements* (EBA/GL/2019/02) and *Guidelines on ICT and security risk management* (EBA/GL/2019/04).
+8. **Central Bank of Ireland.** *Cross-Industry Guidance on Outsourcing* (2021) and related supervisory expectations on third-party risk and operational resilience.
+9. **European Parliament.** *Regulation (EU) 2024/1689 of the European Parliament and of the Council laying down harmonised rules on artificial intelligence (EU AI Act)*.
+10. **NIST.** *AI Risk Management Framework (AI RMF 1.0)* (NIST, 2023). https://www.nist.gov/itl/ai-risk-management-framework
+11. **Lyzr.** *Lyzr Architect and Lyzr Agent Studio documentation* (2025–2026). Platform reference for the agentic substrate on which CATAS is built.
+12. **Amazon Web Services.** *Amazon Bedrock Guardrails* and *Amazon Bedrock AgentCore* product documentation (2025–2026). Reference for the enterprise security primitives described in §4.2.
