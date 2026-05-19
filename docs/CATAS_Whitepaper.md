@@ -157,30 +157,46 @@ CATAS tightly couples two primary agents through a master Python orchestration s
 - **Agent 1: The Treasury Agent.** Responsible for analyzing raw bank transactions and mapping them to the general ledger.
 - **Agent 2: The Compliance Copilot.** Responsible for intercepting Agent 1's resolved data and verifying it against strict regulatory policies before any financial settlement can occur.
 
-```
-  ┌────────────────────┐      ┌──────────────────────┐      ┌────────────────────┐
-  │   Bank Feed / GL   │──▶──│   Agent 1: Treasury  │──▶──│  Agent 2: Compliance│
-  │  (raw txn data)    │      │                      │      │      Copilot        │
-  └────────────────────┘      │  anomaly_detector.pkl│      │ approval_classifier │
-                              │  forecast_model.pkl  │      │        .pkl         │
-                              └──────────┬───────────┘      └──────────┬──────────┘
-                                         │                             │
-                                         ▼                             ▼
-                              ┌────────────────────┐      ┌────────────────────────┐
-                              │  parse-ledger-data │      │   trigger-mlro-alert   │
-                              │      (skill)       │      │      (skill, P1)       │
-                              └────────────────────┘      └───────────┬────────────┘
-                                                                      │
-                                                                      ▼
-                                                          ┌────────────────────────┐
-                                                          │   write-audit-log      │
-                                                          │ (append-only .jsonl)   │
-                                                          └────────────────────────┘
+```mermaid
+flowchart LR
+    subgraph LOCAL["Local — operator machine"]
+        FEED[("Bank Feed / GL<br/>(raw transaction)")]
+        ORCH["run_catas.py<br/>orchestrator"]
+        ML["catas_ml.py<br/>ML scoring layer"]
+        PKL1[/"anomaly_detector.pkl<br/>(Isolation Forest)"/]
+        PKL2[/"forecast_model.pkl<br/>(time-series)"/]
+        PKL3[/"approval_classifier.pkl<br/>(logistic regression)"/]
+        LOG[("audit_trail.jsonl<br/>append-only")]
+    end
+
+    subgraph CLOUD["Lyzr-hosted (cloud LLM)"]
+        A1["Agent 1: Treasury<br/>reasons on scores<br/>+ parse-ledger"]
+        A2["Agent 2: Compliance Copilot<br/>+ trigger-mlro<br/>+ write-audit-log"]
+    end
+
+    FEED --> ORCH
+    ORCH --> ML
+    PKL1 -.loads.-> ML
+    PKL2 -.loads.-> ML
+    PKL3 -.loads.-> ML
+    ML -- "anomaly_score,<br/>liquidity_risk,<br/>approval_probability" --> ORCH
+    ORCH -- "scores injected<br/>into prompt" --> A1
+    A1 -- "structured output<br/>+ scores" --> A2
+    A2 --> LOG
+
+    classDef local fill:#eef5ff,stroke:#4a78c7,color:#1a3766;
+    classDef cloud fill:#fff4e6,stroke:#c08038,color:#5c3a0d;
+    classDef store fill:#f0f0f0,stroke:#888,color:#222;
+    class FEED,ORCH,ML local;
+    class A1,A2 cloud;
+    class PKL1,PKL2,PKL3,LOG store;
 ```
 
-What makes this dual-agent architecture exceptional is its integration of deterministic, offline Machine Learning models into the live LLM flow. LLMs hallucinate; math does not.
+What makes this dual-agent architecture exceptional is its integration of deterministic, offline Machine Learning models into the live LLM flow. LLMs hallucinate; math does not — but cloud-hosted agents also cannot read local `.pkl` files. CATAS resolves this with a strict separation of concerns: the **orchestrator** does the math; the **agents** reason on its output.
 
-When Agent 1 executes, it dynamically loads our localized `anomaly_detector.pkl` (an Isolation Forest trained on synthetic transactional data) to calculate a strict mathematical anomaly score. Concurrently, it loads `forecast_model.pkl` (a time-series algorithm) to calculate projected cash outflows and flag immediate liquidity risks. Agent 2 then inherits these mathematical certainties and utilizes `approval_classifier.pkl` for confidence scoring.
+When `run_catas.py` ingests a transaction, it routes it first through `catas_ml.py` — a local ML scoring layer that loads three serialized scikit-learn bundles: `anomaly_detector.pkl` (Isolation Forest, trained on synthetic transactional data) for an anomaly score; `forecast_model.pkl` (time-series) for a 30-day liquidity-risk flag; and `approval_classifier.pkl` (logistic regression) for an approval probability. These three numbers are computed in Python, on the operator's machine, before any LLM call.
+
+The orchestrator then injects the scores directly into the Treasury Agent's prompt and explicitly instructs the agent **not** to attempt to load `.pkl` files itself — every numeric input the agent reasons over is mathematically pre-computed and verifiable in the audit trail. Agent 2 inherits the same scores plus Agent 1's structured output, and applies the approval probability as a hard confidence threshold for HOLD/BLOCK routing. The deterministic ML grounds both mock and live modes; in mock mode the same `catas_ml` signals drive the rule-based decision, ensuring offline development never silently drifts from production behavior.
 
 ### 4.2 "Private-by-Design" Enterprise Guardrails
 
@@ -242,10 +258,11 @@ For builders and hackathon judges replicating this environment:
 
 *   **Framework:** Lyzr Architect (Core AI logic) / Agent Studio (UI & Gov).
 *   **Primary Orchestrator:** `run_catas.py` — A dual-agent Python pipeline that routes data between Treasury Operations and Compliance evaluation.
-*   **Offline Machine Learning:** Pre-compiled `.pkl` models ground all decision-making before LLMs engage:
-    *   `anomaly_detector.pkl`: Flags anomalous behavior in real-time.
-    *   `forecast_model.pkl`: Predicts liquidity constraints.
-    *   `approval_classifier.pkl`: Provides baseline approval probabilities.
+*   **ML Scoring Layer:** `catas_ml.py` — loaded by the orchestrator, not by the agents. Computes deterministic scores in local Python on every transaction *before* either agent sees the payload, and injects the results into the agent prompts. This is the architectural commitment that prevents the cloud-hosted agents from hallucinating numeric inputs.
+*   **Offline Machine Learning bundles** (loaded by `catas_ml.py`):
+    *   `anomaly_detector.pkl`: Isolation Forest — anomaly score per transaction.
+    *   `forecast_model.pkl`: Time-series model — 30-day liquidity-risk flag.
+    *   `approval_classifier.pkl`: Logistic regression — approval probability used as a HOLD/BLOCK threshold.
 *   **Cloud Enterprise Security:**
     *   **AWS Bedrock Guardrails**: Used strictly for PII redaction (IBANs, personal data) before data hits the primary LLM pipeline.
     *   **Amazon AgentCore Memory**: Provides secure, persistent cross-session memory localized completely in `eu-west-1` via secure cross-account IAM role assumption.
