@@ -1,4 +1,12 @@
 # Required for LIVE mode (calling the Lyzr Agent API).
-# MOCK mode runs on Python stdlib alone — these deps are optional for local demos.
 requests>=2.31
 python-dotenv>=1.0
+
+# ML scoring layer (orchestration/catas_ml.py) — grounds agent decisions with
+# the three offline models. Used in BOTH mock and live mode. If these are
+# absent the orchestrator still runs but falls back to rule-only scoring
+# (catas_ml reports "ML models inactive").
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+statsmodels>=0.14.0
