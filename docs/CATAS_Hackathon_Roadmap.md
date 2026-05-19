@@ -81,46 +81,28 @@ Due to limited hackathon time, data generation and initial model training **must
 - **Tools (Skills):** `trigger-mlro-alert`, `write-audit-log`.
 - **Goal:** Evaluate cross-border transactions against EU Sanctions (CBI/EBA) and generate an immutable log.
 
-**Agent 5: Audit Trail & Reporting**
-- **Input:** All agent outputs, Architect audit logs
-- **Processing:**
-  - Generate immutable audit trail (who, what, when, why for each decision)
-  - Compose compliance report (flagged items, approvals needed)
-  - Export audit-ready PDF
-  - Output: `agent5_audit_trail.json`, `compliance_report.pdf`
-- **Lyzr Template:** Use "Report Generation" + "PDF Export" blueprint
-- **Estimated Time:** 1.5 hours
+#### **Phase 3.5: Integration, Testing & Orchestration (30 mins)**
 
-#### **Phase 3: Integration, Testing & Orchestration (30 mins)**
-
-- [ ] **Define Agent Dependencies:**
+- [ ] **Verify Dual-Agent Dependencies:**
   ```
-  Agent 0 (Manager Agent / UI)
+  Incoming Payloads
     ↓
-  Agent 1 (Transaction Validator) 
+  [Python: run_catas.py] executes Scikit-Learn `.pkl` models FIRST
     ↓
-  Agent 2 (Compliance) ← Agent 3 (Treasury)
+  Agent 1: Treasury Operations (Evaluates anomalies and liquidity)
     ↓
-  Agent 4 (Reconciliation)
+  Agent 2: Compliance Operations (Applies CBI/EBA Rule Sets)
     ↓
-  Agent 5 (Reporting)
-    ↓
-  Agent 0 (Returns Dashboard & Outputs to User)
+  JSON Terminal Output + Persistent `audit_log.jsonl`
   ```
 
-- [ ] **Configure Lyzr Architect Orchestration:**
-  - Agent 1 runs first (parallel processing possible for bank feed chunks)
-  - Agent 2 & 3 run in parallel (independent of each other)
-  - Agent 4 waits for Agents 2 & 3 to complete
-  - Agent 5 runs last (aggregates all decisions)
-  - Set timeout for long-running steps (e.g., ML inference)
+- [ ] **Configure Python Orchestration:**
+  - Verify `run_catas.py` chains Agent 1 output as context to Agent 2 input.
+  - Set timeout for long-running steps (e.g., API requests to Lyzr).
 
-- [ ] **Test Each Agent Independently:**
-  - Run Agent 1 on 100 transactions, verify output schema
-  - Run Agent 2 on Agent 1 output, check compliance flagging (should flag ~20-30 transactions)
-  - Run Agent 3 on Agent 1 output, verify position aggregation
-  - Run Agent 4, check match rates (target >95%)
-  - Run Agent 5, verify audit trail is complete
+- [ ] **Test Each Component Independently:**
+  - Run the ML models on standalone dummy datasets to ensure `.pkl` math executes without crashing.
+  - Pass single test payloads manually to Lyzr UI to verify agent prompt RAG.
 
 - [ ] **End-to-End Test:**
   - Feed sample payload through `run_catas.py`
