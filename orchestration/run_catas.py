@@ -139,15 +139,17 @@ def call_treasury_agent_live(transaction: dict[str, Any], session_id: str) -> di
         f"  Reference:    {transaction.get('reference', '')}\n"
         f"  Bank date:    {transaction.get('bank_date', '')}\n\n"
         "Steps:\n"
-        "1. Call your parse_ledger_data skill to load the snapshot.\n"
-        "2. Look for this transaction in candidate_reconciliation_matches.\n"
-        "3. Return JSON in a fenced ```json``` block with keys:\n"
-        "   reconciled (bool), gl_id (string|null), match_basis (list[string]), notes (string)\n"
+        "1. Load the pre-trained anomaly detector (models/anomaly_detector.pkl) to score this transaction.\n"
+        "1b. Load the time-series forecast model (models/forecast_model.pkl) to predict the next 30 days of cash outflows and assess liquidity risk.\n"
+        "2. Call your parse_ledger_data skill to load the snapshot.\n"
+        "3. Look for this transaction in candidate_reconciliation_matches.\n"
+        "4. Return JSON in a fenced ```json``` block with keys:\n"
+        "   reconciled (bool), gl_id (string|null), match_basis (list[string]), notes (string), anomaly_score (float), liquidity_risk_flag (bool)\n"
     )
     raw = call_lyzr_agent(LYZR_TREASURY_AGENT_ID, session_id, message)
     parsed = extract_json_from_response(raw)
     if parsed is None:
-        return {"reconciled": False, "gl_id": None, "match_basis": [], "notes": raw[:300]}
+        return {"reconciled": False, "gl_id": None, "match_basis": [], "notes": raw[:300], "anomaly_score": 0.0, "liquidity_risk_flag": False}
     return parsed
 
 
@@ -162,11 +164,13 @@ def call_compliance_agent_live(
         "Treasury reconciliation:\n"
         f"{json.dumps(treasury_result, indent=2, default=str)}\n\n"
         "Steps:\n"
-        "1. Call parse_ledger_data for FX rates, risk index, baseline index.\n"
+        "1. Load the ML approval classifier (models/approval_classifier.pkl) to cross-reference with deterministic rules.\n"
+        "1b. Call parse_ledger_data for FX rates, risk index, baseline index.\n"
         "2. Check Rule 2 (sanctions) FIRST. If matched, call trigger_mlro_alert\n"
         "   with priority='P1-URGENT'. Rule 2 supersedes all others — decision=BLOCK.\n"
         "3. If Rule 2 passes, evaluate Rule 1 (>€50K EUR-equivalent),\n"
         "   Rule 3 (variance vs rolling baseline), Rule 4 (counterparty_risk_score).\n"
+        "3b. If deterministic rule = APPROVE, but ML probability < 0.3, route to HITL (decision=HOLD).\n"
         "4. ALWAYS call write_audit_log last with the final decision and per-rule outcomes.\n\n"
         "Use the EU_Sanctions_and_CBI_Watchlist_Mock and Internal_AML_Treasury_Policy_Ireland\n"
         "documents from your RAG knowledge base to ground your reasoning.\n\n"
@@ -175,6 +179,7 @@ def call_compliance_agent_live(
         "  rules_evaluated (list of {rule, outcome, evidence}),\n"
         "  case_ticket_id (string, empty if no MLRO alert),\n"
         "  audit_entry_id (string from write_audit_log),\n"
+        "  ml_approval_probability (float),\n"
         "  notes (string)\n"
     )
     raw = call_lyzr_agent(LYZR_COMPLIANCE_AGENT_ID, session_id, message)
