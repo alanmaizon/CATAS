@@ -84,4 +84,38 @@ These four properties are not aspirational. Each of them is implementable today 
 
 ---
 
-*[Sections 3–8 to follow]*
+## 4. Case Study — CATAS: The First Working Node
+
+CATAS is not a theoretical model; it is a live, dual-agent orchestration layer built explicitly to execute the substrate parameters above. Leveraging **Lyzr Architect**, we constructed a cross-application autonomous workforce that completely eliminates the Treasury vs. Compliance silo. 
+
+### 4.1 The Dual-Agent Architecture
+
+Instead of chaining together five disjointed agents, CATAS enforces the ACE-V ( tri-agent governance protocol ) by tightly coupling two primary agents through a master Python orchestration script (`run_catas.py`). 
+
+- **Agent 1: The Treasury Agent.** Responsible for analyzing raw bank transactions and mapping them to the general ledger. 
+- **Agent 2: The Compliance Copilot.** Responsible for intercepting Agent 1's resolved data and verifying it against strict regulatory policies before any financial settlement can occur.
+
+What makes this dual-agent architecture exceptional is its integration of deterministic, offline Machine Learning models into the live LLM flow. LLMs hallucinate; math does not. 
+
+When Agent 1 executes, it dynamically loads our localized `anomaly_detector.pkl` (an Isolation Forest trained on synthetic transactional data) to calculate a strict mathematical anomaly score. Concurrently, it loads `forecast_model.pkl` (a time-series algorithm) to calculate projected cash outflows and flag immediate liquidity risks. Agent 2 then inherits these mathematical certainties and utilizes `approval_classifier.pkl` for confidence scoring.
+
+### 4.2 "Private-by-Design" Enterprise Guardrails
+
+To operate inside a highly regulated banking environment (such as the Central Bank of Ireland's jurisdiction), standard API wrappers are insufficient. 
+
+CATAS implements Lyzr's **private-by-design** framework via strict AWS Integrations:
+1.  **AWS Bedrock Guardrails:** Before the transaction data reaches the core LLM inference engine, cross-account Guardrails natively redact PII (IBANs, Counterparty Names) and enforce strict topic limitations. 
+2.  **Amazon Bedrock AgentCore Memory:** Deployed securely in an `eu-west-1` (Ireland) cluster using cross-account IAM role assumption (`sts:AssumeRole`), the system maintains long-term session memory. This ensures that past MLRO variances or manual overrides are safely remembered without leaking data outside the tenant's localized AWS boundary.
+
+### 4.3 Deterministic Skill Execution
+
+Agents are only as effective as the actions they can confidently execute. We decoupled the operational work from the chat-interface by providing the agents with strict, executable Python skills:
+*   **`parse-ledger-data`**: Guarantees Agent 1 is executing safe, batched reads of heavy GL ledgers instead of blowing out context windows.
+*   **`trigger-mlro-alert`**: If Agent 2 detects an anomaly (e.g., an EU Sanctions breach where the ML probability diverges from the deterministic rule), the agent doesn't just print text. It fires a P1-URGENT webhook to a Human-in-the-Loop operational queue (e.g., PagerDuty, Slack).
+*   **`write-audit-log`**: Every single decision tree executed by the agents is permanently written to a local `.jsonl` audit log before any subsequent steps can proceed. This fulfills our "Structural Accountability" parameter perfectly.
+
+CATAS operates on real-time data, secures PII natively in AWS, leverages hard mathematical models for anomaly detection, and forces every outcome to be structurally accountable. It is a true enterprise substrate.
+
+---
+
+*[Sections 5–8 to follow]*
