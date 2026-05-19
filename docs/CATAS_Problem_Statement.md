@@ -138,10 +138,10 @@ Lyzr Architect enables anyone to build multi-agent systems and apps in minutes, 
 By end of hackathon, CATAS demo should show:
 
 1. **Reconciliation Speed:** Ingest 100 transactions → fully reconciled in <5 minutes (vs. manual 2+ hours)
-2. **Compliance Coverage:** Apply 10+ rules simultaneously (OFAC, transaction limits, approval workflows)
-3. **Audit Trail:** Export complete decision chain (transaction → agent → rule → approval/flag) in PDF
-4. **Explainability:** Show why a transaction was flagged (specific rule triggered, confidence score, recommended action)
-5. **Multi-Agent Orchestration:** 5+ agents working together without manual intervention
+2. **Compliance Coverage:** Apply European rules simultaneously (EU Sanctions/CBI, transaction limits, approval workflows)
+3. **Audit Trail:** Export complete decision chain into an immutable `.jsonl` audit log.
+4. **Explainability:** Show why a transaction was flagged (specific deterministic ML score, recommended action)
+5. **Multi-Agent Orchestration:** Dual-Agent pipeline orchestrated smoothly in Python without hallucination.
 
 ---
 
