@@ -63,7 +63,7 @@ Due to limited hackathon time, data generation and initial model training **must
 
 ---
 
-### **Phase 3: Python Orchestration & ML Integration (45 mins)**
+#### **Phase 3: Python Orchestration & ML Integration (45 mins)**
 
 **Platform/Orchestration Engineer:** Focus on `run_catas.py` and ML injection.
 
