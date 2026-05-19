@@ -3,14 +3,11 @@
 A Multi-Agent System Design for Compliance & Treasury Automation built for the Lyzr Architect Hackathon.
 
 ## Overview
-CATAS uses a multi-agent framework to solve the reconciliation bottleneck, the audit-trail gap, and the treasury-compliance silo. 
+CATAS uses a Python-orchestrated Dual-Agent framework to solve the reconciliation bottleneck, the audit-trail gap, and the treasury-compliance silo. 
 
-The system consists of a Manager Agent coordinating 5 sub-agents:
-- **Agent 1:** Transaction Validator & Normalizer (Isolation Forest Anomaly Detection)
-- **Agent 2:** Compliance Rules Engine (Logistic Regression)
-- **Agent 3:** Treasurer Position & Risk (ARIMA Forecast)
-- **Agent 4:** Reconciliation & Matching Engine
-- **Agent 5:** Regulatory Reporting & Audit Trail
+The system utilizes deterministic offline ML models to ground LLM reasoning across two distinct operations:
+- **Agent 1:** Treasury Operations (Isolation Forest Anomaly Detection & Prophet Time-Series Forecasts)
+- **Agent 2:** Compliance Operations (Logistic Regression EU Sanction filtering & Immutable Audit Log generation)
 
 ## Prerequisites
 - Python 3.10+
@@ -33,7 +30,7 @@ The system consists of a Manager Agent coordinating 5 sub-agents:
 
 3. **Install dependencies:**
    ```bash
-   pip install -r requirements.txt
+   pip install -r orchestration/requirements.txt
    ```
 
 ## Pre-Hackathon Pipeline (Data & Offline ML)
@@ -42,20 +39,44 @@ To ensure reliable performance during the hackathon, we are using synthesized da
 1. **Generate Data:**
    Run the data generation script to build synthetic historical data, GL balances, and the live demo dataset.
    ```bash
-   python scripts/generate_data.py
+   # Synthetic data already pre-loaded into /data/ directory
    ```
-   *Outputs will be placed in the `/data/` directory.*
 
 2. **Train Models:**
    Train and serialize the Machine Learning `.pkl` models based on the offline synthetic data.
    ```bash
-   python scripts/train_models.py
+   # Offline Models already serialized in /models/ directory
    ```
-   *Outputs will be placed in the `/models/` directory.*
+
+## Live Execution Pipeline (Hackathon Demo)
+
+CATAS runs seamlessly using a custom Python script that strings together the Offline ML Models with the live Lyzr Agent API.
+
+1. **Set your API Keys:**
+   Create a `.env` file in the root directory:
+   ```bash
+   LYZR_API_KEY="your-api-key"
+   LYZR_TREASURY_AGENT_ID="treasury-id"
+   LYZR_COMPLIANCE_AGENT_ID="compliance-id"
+   ```
+
+2. **Run the Orchestrator:**
+   To run the script in deterministic Mock mode (no Lyzr Credits required):
+   ```bash
+   python orchestration/run_catas.py --mode mock
+   ```
+
+   To run the script against the live Lyzr API:
+   ```bash
+   python orchestration/run_catas.py --mode live --limit 5
+   ```
+
+3. **View the Dashboard:**
+   To visualize the generated `/logs/audit_trail.txt`, load it into the **Architect Beta (`architect.new`)** UI dashboard!
 
 ## Hackathon Phases & Roles
 
 - **Data Scientist/ML Engineer:** Responsible for features, data schema, and predictive analytics.
-- **Platform/Orchestration Engineer:** Responsible for Lyzr Architect orchestration, agent workflows, and the UI layout.
+- **Platform/Orchestration Engineer:** Responsible for Python integration, Lyzr API orchestration, AWS Guardrails, and Architect.new UI display.
 
-*See `CATAS_Hackathon_Roadmap.md` for specific timelines and event details.*
+*See `docs/CATAS_Hackathon_Roadmap.md` for specific timelines and event details.*
