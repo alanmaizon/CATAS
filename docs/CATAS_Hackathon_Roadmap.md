@@ -50,69 +50,36 @@ Due to limited hackathon time, data generation and initial model training **must
 
 ### **Hackathon Development Plan (7:15 PM - 8:45 PM)**
 
-#### **Phase 2: Agent Orchestration & Manager Agent Setup (45 mins)**
+#### **Phase 2: Lyzr Agent Studio Setup (30 mins)**
 
-- [ ] **Platform/Orchestration Engineer:** Focus on Architect setup.
-- [ ] **NEW: Build Agent 0 (Manager Agent)**
-  - **Responsibility:** Act as the primary UI layer, intercept user input, interpret goals, and dispatch tasks to Agents 1-5.
-  - Setup prompt to interface between human operator and the sub-agents.
-- [ ] **Agent 1: Transaction Validator Component**
-  - Integrate pre-trained `.pkl` Isolation Forest model.
-- [ ] **Agent 2: Compliance Rules Engine**
-  - Integrate pre-trained `.pkl` LR model. 
-- [ ] **Agent 3: Treasurer Position & Risk**
-  - Integrate pre-trained `.pkl` forecasting model.
+- [ ] **Dual-Agent Creation in UI:**
+  - Create **Treasury Agent**: Focuses on liquidity, anomaly detection, and state.
+  - Create **Compliance Agent**: Focuses on regulatory rule-sets and sanction checking.
+- [ ] **Enterprise Guardrails Setup:**
+  - Attach **AWS Bedrock Guardrails** to redact PII (IBANs/Names) before hitting the LLM.
+  - Configure **Amazon AgentCore Memory** (`eu-west-1`) for cross-session contexts securely via IAM Role assumption.
+- [ ] **Secure API IDs:**
+  - Extract Agent IDs and API Keys and populate the `.env` for `run_catas.py`.
 
 ---
 
-### **Phase 3: Agent Development & Orchestration (30 mins)**
+### **Phase 3: Python Orchestration & ML Integration (45 mins)**
 
-**Platform/Orchestration Engineer:** Focus on orchestration and Architect configuration.
+**Platform/Orchestration Engineer:** Focus on `run_catas.py` and ML injection.
 
-**Agent 1: Transaction Validator**
-- **Input:** `bank_transactions_input.json`
-- **Processing:**
-  - Parse transactions → normalize to ISO 20022 schema
-  - Call ML anomaly detector (from Day 1)
-  - Deduplicate check
-  - Output: `agent1_normalized.json` (with anomaly scores)
-- **Lyzr Template:** Use "Data Normalization" + "ML Integration" blueprint
-- **Estimated Time:** 1.5 hours
+**Architectural Focus:**
+- `run_catas.py` orchestrates the flow natively in Python, eliminating the need for a 5-agent sequential chain.
+- The Python script executes the pre-trained `scikit-learn` `.pkl` models FIRST, injecting their deterministic math (anomaly scores, liquidity risk, approvals) into the LLM prompt.
 
-**Agent 2: Compliance Rules Engine**
-- **Input:** `agent1_normalized.json`, `compliance_rules.json`, `counterparty_reference.json`
-- **Processing:**
-  - For each transaction:
-    - OFAC check (is counterparty in sanctions list?)
-    - Transaction limit check (< daily limit per counterparty?)
-    - Approval workflow (does it need approval?)
-    - Reportable transaction (trigger SAR, CAT, TRACE?)
-  - Call ML approval classifier
-  - Output: `agent2_compliance_decisions.json` (with compliance status & confidence)
-- **Lyzr Template:** Use "Rules Engine" + "API Integration" (for OFAC lookup)
-- **Estimated Time:** 2 hours
+**Agent 1: Treasury Operations**
+- **Input:** Raw JSON data & Offline ML outputs (`anomaly_detector.pkl`, `forecast_model.pkl`).
+- **Tools (Skills):** `parse-ledger-data`.
+- **Goal:** Evaluate transactions against liquidity risk and anomaly bounds.
 
-**Agent 3: Treasurer Position & Risk**
-- **Input:** `agent1_normalized.json`, GL balances, FX rates
-- **Processing:**
-  - Aggregate positions by currency, counterparty, entity
-  - Compute liquidity ratios
-  - Call ML forecast model (30-day cash flow)
-  - Identify concentration risks
-  - Output: `agent3_positions.json` (with liquidity metrics, forecast)
-- **Lyzr Template:** Use "Data Aggregation" + "Analytics" blueprint
-- **Estimated Time:** 1.5 hours
-
-**Agent 4: Reconciliation Engine**
-- **Input:** `agent1_normalized.json`, `gl_ledger.json`, Agent 2 & 3 outputs
-- **Processing:**
-  - Bank-to-ledger matching (fuzzy match on amount, date, counterparty)
-  - Call ML match confidence scorer
-  - Flag unmatched (timing differences, duplicates, fraud suspects)
-  - Route exceptions to escalation queue
-  - Output: `agent4_reconciliation.json` (with match status, unmatched list, escalations)
-- **Lyzr Template:** Use "Data Matching" blueprint (or custom Python logic)
-- **Estimated Time:** 2 hours
+**Agent 2: Compliance Operations**
+- **Input:** Treasury summary, RAG Policies, & Offline ML outputs (`approval_classifier.pkl`).
+- **Tools (Skills):** `trigger-mlro-alert`, `write-audit-log`.
+- **Goal:** Evaluate cross-border transactions against EU Sanctions (CBI/EBA) and generate an immutable log.
 
 **Agent 5: Audit Trail & Reporting**
 - **Input:** All agent outputs, Architect audit logs
@@ -156,102 +123,42 @@ Due to limited hackathon time, data generation and initial model training **must
   - Run Agent 5, verify audit trail is complete
 
 - [ ] **End-to-End Test:**
-  - Feed 100 transactions through full pipeline
-  - Measure execution time (target <5 minutes)
-  - Verify all 5 agents execute in order
-  - Check that unmatched items are properly escalated
+  - Feed sample payload through `run_catas.py`
+  - Measure execution time.
+  - Verify deterministic ML inference executes correctly before LLM RAG rules apply.
+  - Verify `write-audit-log` is capturing the sequence correctly.
 
-**Deliverable:** Fully orchestrated 5-agent system, tested end-to-end
+**Deliverable:** Fully orchestrated Dual-Agent pipeline running natively in Python, tested end-to-end.
 
 ---
 
-#### **Phase 4: UI, Polish & Demo Prep (15 mins)**
+#### **Phase 4: Terminal Polish & Demo Prep (15 mins)**
 
-- [ ] **Leverage Architect's Low-Code UI Builder:**
-  - Input form: Bank feed upload (drag-drop or CSV paste)
-  - Dashboard 1: Reconciliation Status
-    - Total transactions ingested
-    - Matched count / % (progress bar)
-    - Unmatched count (with drill-down)
-    - Execution time
-  - Dashboard 2: Compliance Exceptions & Human-in-the-Loop (HITL) Queue
-    - Flagged transactions (table with reason, amount, counterparty)
-    - Approvals needed (queue with approver names)
-    - HITL Queue: Transactions where Rules and ML scores diverged (showing the calculated ML variance).
-    - Risk summary (OFAC hits, high-risk counterparties)
-  - Dashboard 3: Audit Trail
-    - Transaction lookup (search by ID or counterparty)
-    - Show all agent decisions for selected transaction (Agent 1 anomaly score → Agent 2 compliance decision → Agent 4 match result → Agent 5 audit log)
-  - Export: PDF compliance report, CSV exception list, JSON audit trail
+- [ ] **Prepare Terminal Output:**
+  - Ensure `run_catas.py` output is clean and readable for judges.
+  - Color-code JSON output logs for Treasury vs Compliance returns.
+- [ ] **Demo Execution (8:45 PM - 9:00 PM)**
+  - [ ] **Create Demo Script:**
+    ```
+    1. Show problem statement on screen (fraud, manual processes, audit silos).
+    2. Kick off `run_catas.py` in Terminal.
+    3. Explain the Dual-Agent Architecture while it executes: Treasury (Agent 1) hands off to Compliance (Agent 2).
+    4. Emphasize offline ML models grounding the AI decisions.
+    5. Show the EU Sanctions rules being applied deterministically.
+    6. Open the `audit_log.jsonl` to prove Structural Accountability.
+    ```
+  - [ ] **Prepare Talking Points (No Slides Allowed):**
+    - Private-by-design (AWS Bedrock Guardrails, AgentCore Memory in `eu-west-1`).
+    - Deterministic skills execution (`parse-ledger-data`, `trigger-mlro-alert`).
+    - Explainable "Human-in-the-Loop" architecture.
 
-- [ ] **Architect UI Customization:**
-  - Use Architect's built-in theming (or provide custom CSS)
-  - Add company logo and "CATAS" branding
-  - Make dashboards interactive (filter by entity, date range, risk level)
-
-**Deliverable:** Polished, functional UI showing all outputs
-
-#### **Demo Execution (8:45 PM - 9:00 PM)**
-
-- [ ] **Create Demo Script:**
-  ```
-  1. [Time: 0-30 sec] Show problem statement on screen
-     - "80% of companies report payment fraud"
-     - "Manual reconciliation takes 20 hrs/month"
-     - "Audit trail gaps = regulatory risk"
-  
-  2. [Time: 30-90 sec] Upload sample bank feed (100 transactions)
-     - Show Architect ingesting data
-  
-  3. [Time: 90-180 sec] Run full pipeline
-     - Show each agent executing (or fast-forward to results)
-     - Highlight: "Processing 100 transactions in <5 minutes"
-  
-  4. [Time: 180-240 sec] Show results on dashboard
-     - Reconciliation: "97 matched (97%), 3 unmatched (escalated)"
-     - Compliance: "22 transactions flagged (OFAC, limits, workflows)"
-     - Exposures: "Top counterparty = 18% of portfolio"
-  
-  5. [Time: 240-300 sec] Drill into one flagged transaction & Show HITL
-     - Show Human-in-the-Loop feature: "Rule said approve, but ML detected 90% chance of escalating. Pushing to HITL review."
-     - Show audit trail: Agent 1 flagged anomaly → Agent 2 flagged rule/ML variance → Agent 5 HITL recommended
-     - Explain: "Complete traceability for regulators by catching edge cases"
-  
-  6. [Time: 300-330 sec] Export compliance report (PDF)
-     - Show PDF with all flagged items, reasoning, recommendations
-  
-  7. [Time: 330-360 sec] Pitch impact
-     - "Reconciliation: 20 hrs → 5 min (240x faster)"
-     - "Compliance: Manual checks → Real-time rules"
-     - "Audit ready: Full chain-of-custody in seconds"
-  ```
-
-- [ ] **Prepare Talking Points (No Slides Allowed):**
-  - Point 1: Problem (80% fraud, manual processes, silos)
-  - Point 2: Solution (5-agent system, explainable, real-time)
-  - Point 3: Architecture verbal overview (workflow of agents)
-  - Point 4: Impact metrics walkthrough (speed, accuracy, compliance)
-  - Point 5: Why Lyzr Architect (low-code, multi-agent, ACE-V governance)
-  - Point 6: Call to action (pilot with real treasury team)
-
-- [ ] **Stress Test for Demo:**
-  - Run pipeline 2-3 times to verify repeatability
-  - Test on different data (try another 50 transactions)
-  - Have backup data in case of issues
-  - Pre-record agent execution (as fallback video, since slides aren't allowed)
-
-- [ ] **Logistics:**
-  - Test internet connectivity (for live demo)
-  - Ensure Architect UI is accessible from demo screen
-  - Check laptop + HDMI cable works + battery is ok
-
-**Deliverable:** Polished, 5-minute live demo (strict adherence to hands-on demo rules)
+**Deliverable:** Polished, 5-minute live terminal demo.
 
 ---
 
 ## Specific ML Engineering Tasks
 
-### **Task 1: Anomaly Detection (Agent 1)**
+### **Task 1: Anomaly Detection (Treasury ML)**
 
 **Objective:** Identify unusual transactions that may indicate fraud or data entry errors.
 
@@ -259,7 +166,7 @@ Due to limited hackathon time, data generation and initial model training **must
 1. **Load Data:**
    ```python
    import pandas as pd
-   df_historical = pd.read_csv('data/historical_transactions.csv')  # 1000 rows
+   df_historical = pd.read_csv('data/historical_transactions.csv')
    ```
 
 2. **Feature Engineering:**
@@ -339,7 +246,7 @@ Due to limited hackathon time, data generation and initial model training **must
    pickle.dump(lr, open('models/approval_classifier.pkl', 'wb'))
    ```
 
-4. **Inference (in Agent 2):**
+4. **Inference (in `run_catas.py` LLM Orchestrator):**
    ```python
    # For each transaction:
    features_new = [amount_ratio, days_since_last, type_code, risk_code, role_code]
@@ -360,7 +267,7 @@ Due to limited hackathon time, data generation and initial model training **must
 
 ---
 
-### **Task 3: Cash Flow Forecast (Agent 3)**
+### **Task 3: Cash Flow Forecast (Treasury ML)**
 
 **Objective:** Predict next 30 days of cash outflows to identify liquidity risk.
 
@@ -397,11 +304,11 @@ Due to limited hackathon time, data generation and initial model training **must
 3. **Serialize Model:**
    ```python
    import joblib
-   joblib.dump(model, 'models/forecast_model_entity_a_usd.pkl')
+   joblib.dump(model, 'models/forecast_model.pkl')
    # (repeat for each entity/currency combination)
    ```
 
-4. **Inference (in Agent 3):**
+4. **Inference (in `run_catas.py` LLM Orchestrator):**
    ```python
    # Load model, make 30-day forecast
    forecast = model.predict(future_dates_30)
@@ -427,19 +334,19 @@ Due to limited hackathon time, data generation and initial model training **must
 
 ### **End of Pre-Hackathon:**
 - [ ] **Data Scientist/ML Engineer:** Synthetic datasets mapped, 3 ML models trained (offline), serialized (`.pkl`), ready for integration
-- [ ] **Platform/Orchestration Engineer:** Repos initialized, Lyzr Architect sandbox ready
+- [ ] **Platform/Orchestration Engineer:** Repos initialized, Python orchestrator `.env` ready
 
 ### **End of Phase 2 (8:00 PM):**
-- [ ] **Platform/Orchestration Engineer:** Manager Agent and Agents 1-5 logic built in Architect
-- [ ] **Data Scientist/ML Engineer:** Verify incoming live schemas match pre-trained models
+- [ ] **Platform/Orchestration Engineer:** Treasury and Compliance agents built in Lyzr UI, API IDs inserted to `.env`.
+- [ ] **Data Scientist/ML Engineer:** Verify incoming live schemas match pre-trained models.
 
 ### **End of Phase 3 (8:30 PM):**
-- [ ] **Platform/Orchestration Engineer:** Agents deployed in Architect, individual tests passing
-- [ ] **Both:** Models integrated, End-to-end pipeline tested
+- [ ] **Platform/Orchestration Engineer:** `run_catas.py` successfully chaining Python + Lyzr API + Skills.
+- [ ] **Both:** Models integrated, Dual-Agent End-to-end pipeline tested.
 
 ### **End of Phase 4 (8:45 PM):**
-- [ ] **Platform/Orchestration Engineer:** UI polished, dashboards functional
-- [ ] **Both:** Demo rehearsed, talking points finalized (live demo only)
+- [ ] **Platform/Orchestration Engineer:** Terminal output polished, JSON strings color-coded.
+- [ ] **Both:** Demo rehearsed, talking points finalized (live terminal demo only)
 
 ---
 
@@ -447,23 +354,18 @@ Due to limited hackathon time, data generation and initial model training **must
 
 **If ML models aren't training properly:**
 - Use simpler heuristics instead (e.g., hardcoded anomaly rules: flag if amount > 3σ from mean)
-- Agent 1: Flag transactions with amount > $1M as anomalies
-- Agent 2: Flag high-risk counterparties automatically, approve low-risk
-- Agent 3: Use simple average (no forecasting) for liquidity
+- Agent 1: Flag transactions with amount > $1M as anomalies.
+- Agent 2: Flag high-risk counterparties automatically, approve low-risk.
 
-**If Architect orchestration issues:**
-- Build agents as standalone Python scripts, then wrap in Architect
-- Or use bash/shell scripts to chain agents (Agent 1 output → Agent 2 input, etc.)
-- Export intermediate results to JSON files for manual inspection
+**If `run_catas.py` API bridging fails:**
+- Drop dual-agent complex pass-off, just ask the Treasury agent for both pieces of logic.
+- Or use bash/shell scripts to chain `.pkl` output directly to pure ChatGPT APIs.
 
-**If UI not rendering:**
-- Fallback: Show results as tables/JSON in browser console
-- Or export CSV reports instead of interactive dashboards
+**If Terminal Output unreadable:**
+- Turn off debug JSON logs, print clear `[TREASURY]` and `[COMPLIANCE]` headers.
 
 **Time constraints:**
-- Minimum viable demo: Show Agent 1 + Agent 2 (most impactful)
-- Skip Agent 3 (treasury functions) if needed
-- Still show audit trail (Agent 5) at end
+- Minimum viable demo: Show just the Treasury agent running the anomaly detector.
 
 ---
 
@@ -472,11 +374,10 @@ Due to limited hackathon time, data generation and initial model training **must
 | Metric | Target | Importance |
 |--------|--------|-----------|
 | **Pipeline executes end-to-end** | Yes | Critical |
-| **Execution time** | <5 min for 100 txns | High |
-| **Match rate** | >95% | High |
+| **Dual-Agent Passing works** | Yes | High |
+| **Deterministic skills hit** | >95% | High |
 | **Compliance rules applied** | 5+ | High |
 | **Audit trail complete** | 100% coverage | Critical |
-| **UI functional** | All dashboards load | Medium |
 | **Demo runs live** | No crashes | High |
 | **Pitch clarity** | Problem → Solution → Impact | High |
 
@@ -488,7 +389,7 @@ If judges show interest / you win:
 
 1. **Expand to real data:** Connect to actual bank APIs (Plaid, etc.)
 2. **Production ML:** Retrain models on larger datasets, optimize hyperparameters
-3. **Regulatory integration:** Add real OFAC list integration, regulatory submission APIs
+3. **Regulatory integration:** Add real EU/CBI sanction list integration, regulatory submission APIs
 4. **Enterprise deployment:** Scale to multi-user, add user auth/permissions
 5. **IP & IP protection:** Patent agent orchestration approach, trademark CATAS
 
